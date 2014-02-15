@@ -1,5 +1,5 @@
 #! /bin/sh
-FILES="vimrc bashrc"
+FILES="vimrc bashrc inputrc"
 SOURCE=$PWD
 TARGET=$HOME
 
