@@ -16,8 +16,14 @@ Bundle 'repeat.vim'
 Bundle 'vim-indent-object'
 Bundle 'danielroseman/pygd-vim'
 Bundle 'Tagbar'
-"Bundle 'scrooloose/syntastic'
+Bundle 'jwhitley/vim-matchit'
+Bundle 'scrooloose/syntastic'
 "Bundle 'Valloric/YouCompleteMe'
+Bundle 'mileszs/ack.vim'
+Bundle 'tpope/vim-rails'
+Bundle 'rizzatti/funcoo.vim'
+Bundle 'rizzatti/dash.vim'
+Bundle 'milkypostman/vim-togglelist'
 filetype plugin indent on
 syntax on
 
@@ -31,10 +37,10 @@ colorscheme solarized
 set cc=80
 set mouse=a
 " for trailing spaces
-hi specialkey guibg=black ctermbg=red
+"hi specialkey guibg=black ctermbg=red
 " fix bracket highlighting - not needed with solarized scheme
 "highlight MatchParen cterm=bold ctermfg=8 ctermbg=0
-hi ColorColumn ctermbg=blue
+"hi ColorColumn ctermbg=blue
 " change cursor shape when switching between normal and insert
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
@@ -43,6 +49,10 @@ set number
 set ruler
 set tabstop=2
 set shiftwidth=2
+set softtabstop=2
+set expandtab
+" always show statusline
+set laststatus=2
 "set undofile
 set ignorecase
 set smartcase
@@ -79,6 +89,7 @@ nnoremap <C-G> 3<C-G>
 let g:ctrlp_working_path_mode = ''
 let g:ctrlp_map = '<leader>t'
 nnoremap <leader>o :CtrlPBuffer<cr>
+nnoremap <leader>y :CtrlPClearCache<cr>
 
 " sensible navigation in command mode
 cnoremap <C-a>  <Home>
@@ -95,7 +106,9 @@ cnoremap <C-g>  <C-c>
 
 "autocmd FileType python set ft=python.django sw=2 " For SnipMate
 autocmd FileType python set tw=0 " no textwrap until I can write a proper formatexpr
-noremap <leader>d <S-o>import pdb;pdb.set_trace()<Esc>
+"noremap <leader>d <S-o>import pdb;pdb.set_trace()<Esc>
+nmap <silent> <leader>d <Plug>DashSearch
+
 noremap gD ?\(def\<bar>class\) <c-r>=expand('<cword>')<cr>\><cr>
 
 nmap <leader>g :TagbarToggle<CR>
@@ -123,7 +136,7 @@ au FileType svn set nonumber nolist
 set wildignore+=*.jpg,*.gif,*.pyc,*/core/static/javascript,*/core/static/styles/trogedit,*/google3/education/glearn/google3,READONLY,*/core/static/third_party,
 " convert from foo.bar to foo['bar']
 nmap <leader>p ysaw'ysa']hx
-let g:ackprg="ack-grep\\ -H\\ --nocolor\\ --nogroup"
+"let g:ackprg="ack-grep\\ -H\\ --nocolor\\ --nogroup"
 
 " if we're in a virtualenv, set up paths for goto file and omnicomplete
 if $VIRTUAL_ENV != ''
@@ -136,6 +149,11 @@ let &path = &path . "," . $VIRTUAL_ENV . '/' . finddir('ext', $VIRTUAL_ENV . '/*
 let &path = &path . "," . $VIRTUAL_ENV . '/' . finddir('templates', $VIRTUAL_ENV . '/**2')
 let &path = &path . "," . $VIRTUAL_ENV
 execute "cd " . s:cwd
+endif
+
+let g:gov_base = matchstr(getcwd(), '\.*\/govuk\/\([^/]*\).*\zs.*\ze\1')
+if g:gov_base != ''
+  set stl=%<(%{g:gov_base})\ %f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 endif
 
 " tell surround.vim about Django block tags
