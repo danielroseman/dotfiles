@@ -7,6 +7,7 @@ Bundle 'ctrlp.vim'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'gregsexton/MatchTag'
 Bundle 'tpope/vim-ragtag'
+Bundle 'tpope/vim-fugitive'
 Bundle 'UltiSnips'
 Bundle 'The-NERD-Commenter'
 Bundle 'surround.vim'
@@ -18,12 +19,19 @@ Bundle 'danielroseman/pygd-vim'
 Bundle 'Tagbar'
 Bundle 'jwhitley/vim-matchit'
 Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdtree'
 "Bundle 'Valloric/YouCompleteMe'
 Bundle 'mileszs/ack.vim'
 Bundle 'tpope/vim-rails'
+Bundle 'kana/vim-textobj-user'
+Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
+Bundle 'rodjek/vim-puppet'
 Bundle 'milkypostman/vim-togglelist'
+Bundle 'rking/ag.vim'
+Bundle 'ConradIrwin/vim-bracketed-paste'
+Bundle 'elzr/vim-json'
 filetype plugin indent on
 syntax on
 
@@ -129,7 +137,7 @@ au FileType svn set nonumber nolist
 "let Tlist_GainFocus_On_ToggleOpen=1
 "nmap <silent> <F5> :TlistToggle<CR>
 "vnoremap <S-F5> :!python<CR>
-"nmap <silent> <F6> :NERDTreeToggle<CR>
+nmap <silent> <C-n> :NERDTreeToggle<CR>
 "nmap <silent> <S-F6> :NERDTreeToggle<CR><C-w><Right>:NERDTreeFind<CR>
 "nmap ; :
 "let NERDTreeIgnore=['\~$', '\.pyc']
