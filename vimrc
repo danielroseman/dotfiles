@@ -32,6 +32,8 @@ Bundle 'milkypostman/vim-togglelist'
 Bundle 'rking/ag.vim'
 Bundle 'ConradIrwin/vim-bracketed-paste'
 Bundle 'elzr/vim-json'
+Bundle 'camelcasemotion'
+Bundle 'fatih/vim-go'
 filetype plugin indent on
 syntax on
 
@@ -128,10 +130,12 @@ au BufRead,BufNewFile *.json set filetype=json
 " au FileType json nmap <expr> <leader>jt :py cb=vim.current.buffer;import json;d=json.dumps(eval(''.join(cb)),indent=4);cb[:]=d.split('\n')
 au FileType json map <leader>jt  <Esc>:%!/usr/bin/python -mjson.tool<CR>
 au FileType json set foldmethod=indent
+let g:vim_json_syntax_conceal=0
 set foldlevelstart=20
 au Filetype yaml set autoindent
 
 au FileType svn set nonumber nolist
+au BufRead,BufNewFile *.md set filetype=markdown textwidth=80 formatoptions=t1
 "let g:Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 "let Tlist_Sort_Type='name'
 "let Tlist_GainFocus_On_ToggleOpen=1
