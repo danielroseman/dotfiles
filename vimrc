@@ -9,6 +9,7 @@ Bundle 'gregsexton/MatchTag'
 Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-fugitive'
 Bundle 'UltiSnips'
+Bundle 'honza/vim-snippets'
 Bundle 'The-NERD-Commenter'
 Bundle 'surround.vim'
 Bundle 'kevinw/pyflakes-vim'
@@ -77,6 +78,7 @@ set tildeop
 set hlsearch
 set list
 set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:»,precedes:«
+au FileType go set listchars=tab:\ \ ,eol:¬,trail:\ ,extends:»,precedes:«
 " mapping to remove highlight after search
 nnoremap <silent> <leader><space> :noh<cr>
 " reselect last pasted text, preserving visual mode that was used originally
@@ -115,7 +117,7 @@ cnoremap <Esc>d <S-right><Delete>
 cnoremap <C-g>  <C-c>
 
 "autocmd FileType python set ft=python.django sw=2 " For SnipMate
-autocmd FileType python set tw=0 " no textwrap until I can write a proper formatexpr
+autocmd FileType python set tw=0 sw=2 sts=2 " no textwrap until I can write a proper formatexpr
 "noremap <leader>d <S-o>import pdb;pdb.set_trace()<Esc>
 nmap <silent> <leader>d <Plug>DashSearch
 
@@ -145,7 +147,7 @@ nmap <silent> <C-n> :NERDTreeToggle<CR>
 "nmap <silent> <S-F6> :NERDTreeToggle<CR><C-w><Right>:NERDTreeFind<CR>
 "nmap ; :
 "let NERDTreeIgnore=['\~$', '\.pyc']
-set wildignore+=*.jpg,*.gif,*.pyc,*/core/static/javascript,*/core/static/styles/trogedit,*/google3/education/glearn/google3,READONLY,*/core/static/third_party,
+set wildignore+=*.jpg,*.gif,*.pyc,*/core/static/javascript,*/core/static/styles/trogedit,*/carrierwave-tmp,*/tmp
 " convert from foo.bar to foo['bar']
 nmap <leader>p ysaw'ysa']hx
 "let g:ackprg="ack-grep\\ -H\\ --nocolor\\ --nogroup"
@@ -163,7 +165,8 @@ let &path = &path . "," . $VIRTUAL_ENV
 execute "cd " . s:cwd
 endif
 
-let g:gov_base = matchstr(getcwd(), '\.*\/govuk\/\([^/]*\).*\zs.*\ze\1')
+"let g:gov_base = matchstr(getcwd(), '\.*\/govuk\/\([^/]*\).*\zs.*\ze\1')
+let g:gov_base = matchstr(getcwd(), '\.*\/govuk\/\zs\([^/]*\)\ze')
 if g:gov_base != ''
   set stl=%<(%{g:gov_base})\ %f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 endif
