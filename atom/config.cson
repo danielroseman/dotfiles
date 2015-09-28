@@ -1,0 +1,33 @@
+"*":
+  "exception-reporting":
+    userId: "f0e558c8-1836-43a1-1bd7-d2fdde5e7a6f"
+  welcome:
+    showOnStartup: false
+  editor:
+    invisibles: {}
+    fontFamily: "Source Code Pro"
+    showInvisibles: true
+    lineHeight: 1.4
+    fontSize: 12
+  core:
+    themes: [
+      "one-dark-ui"
+      "solarized-dark-syntax"
+    ]
+    disabledPackages: [
+      "goto"
+    ]
+  "ruby-test":
+    cucumberAllCommand: "bundle exec cucumber --color features"
+    cucumberFileCommand: "bundle exec cucumber --color {relative_path}"
+    cucumberSingleCommand: "bundle exec cucumber --color {relative_path}:"
+    rspecAllCommand: "bundle exec rspec --tty spec"
+    rspecFileCommand: "bundle exec rspec --tty spec {relative_path}"
+    rspecSingleCommand: "bundle exec rspec --tty spec {relative_path}:"
+  "rails-transporter": {}
+  "autocomplete-plus":
+    enableAutoActivation: false
+  "fuzzy-finder": {}
+  tabs: {}
+  zentabs:
+    maximumOpenedTabs: 10
