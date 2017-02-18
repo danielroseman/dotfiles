@@ -24,6 +24,7 @@ Bundle 'scrooloose/nerdtree'
 "Bundle 'Valloric/YouCompleteMe'
 Bundle 'mileszs/ack.vim'
 Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-endwise'
 Bundle 'kana/vim-textobj-user'
 Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'rizzatti/funcoo.vim'
@@ -35,8 +36,12 @@ Bundle 'ConradIrwin/vim-bracketed-paste'
 Bundle 'elzr/vim-json'
 Bundle 'camelcasemotion'
 Bundle 'fatih/vim-go'
+Bundle 'elixir-lang/vim-elixir'
+Bundle 'wesQ3/vim-windowswap'
+Bundle 'groovyindent-unix'
 filetype plugin indent on
 syntax on
+set backspace=indent,eol,start
 
 let g:ycm_filetype_specific_completion_to_disable = {'cpp': 1, 'c': 1}
 
