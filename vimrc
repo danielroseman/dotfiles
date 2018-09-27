@@ -152,10 +152,11 @@ nmap <silent> <C-n> :NERDTreeToggle<CR>
 "nmap <silent> <S-F6> :NERDTreeToggle<CR><C-w><Right>:NERDTreeFind<CR>
 "nmap ; :
 "let NERDTreeIgnore=['\~$', '\.pyc']
-set wildignore+=*.jpg,*.gif,*.pyc,*/core/static/javascript,*/core/static/styles/trogedit,*/carrierwave-tmp,*/tmp
+set wildignore+=*.jpg,*.gif,*.pyc,*/core/static/javascript,*/core/static/styles/trogedit,*/carrierwave-tmp,*/tmp,*/node_modules
 " convert from foo.bar to foo['bar']
 nmap <leader>p ysaw'ysa']hx
 "let g:ackprg="ack-grep\\ -H\\ --nocolor\\ --nogroup"
+nnoremap <C-J> o<CR><Esc>k$
 
 " if we're in a virtualenv, set up paths for goto file and omnicomplete
 if $VIRTUAL_ENV != ''
@@ -191,3 +192,4 @@ function! FindFunctionsAndClasses()
 endfunction
 nnoremap <silent> <leader>f :call FindFunctionsAndClasses()<CR>
 
+let g:syntastic_check_on_wq = 0
