@@ -19,10 +19,9 @@ _gov() {
     COMPREPLY=( $(compgen -W "${files}" -- ${cur}) )
 }
 complete -F _gov gov
-PROMPT_COMMAND=get_base
-alias pd="cd $HOME/govuk/puppet/development"
+#PROMPT_COMMAND=get_base
+alias pd="cd $HOME/govuk/govuk-puppet/development-vm"
 alias gu="git checkout master && git pull"
-[ -f /opt/boxen/env.sh ] && source /opt/boxen/env.sh
 
 ### Added by the Heroku Toolbelt
 #export PATH="/usr/local/heroku/bin:$PATH"
@@ -60,5 +59,32 @@ function vpn {
     esac
 }
 
-source /opt/boxen/homebrew/bin/virtualenvwrapper.sh
+VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
 export PROJECT_HOME=/Users/danielroseman/Projects
+eval "$(rbenv init -)"
+
+SSH_ENV="$HOME/.ssh/environment"
+
+function start_agent {
+    echo "Initialising new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add;
+    /usr/bin/ssh-add ~/.ssh/govuk
+}
+
+# Source SSH settings, if applicable
+
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
+
