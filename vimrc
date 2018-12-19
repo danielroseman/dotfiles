@@ -1,44 +1,52 @@
 " Configure vundle
 filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
-Bundle 'ctrlp.vim'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'gregsexton/MatchTag'
-Bundle 'tpope/vim-ragtag'
-Bundle 'tpope/vim-fugitive'
-Bundle 'UltiSnips'
-Bundle 'honza/vim-snippets'
-Bundle 'The-NERD-Commenter'
-Bundle 'surround.vim'
-Bundle 'kevinw/pyflakes-vim'
-Bundle 'bufkill.vim'
-Bundle 'repeat.vim'
-Bundle 'vim-indent-object'
-Bundle 'danielroseman/pygd-vim'
-Bundle 'Tagbar'
-Bundle 'jwhitley/vim-matchit'
-Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdtree'
-"Bundle 'Valloric/YouCompleteMe'
-Bundle 'mileszs/ack.vim'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-endwise'
-Bundle 'kana/vim-textobj-user'
-Bundle 'nelstrom/vim-textobj-rubyblock'
-Bundle 'rizzatti/funcoo.vim'
-Bundle 'rizzatti/dash.vim'
-Bundle 'rodjek/vim-puppet'
-Bundle 'milkypostman/vim-togglelist'
-Bundle 'rking/ag.vim'
-Bundle 'ConradIrwin/vim-bracketed-paste'
-Bundle 'elzr/vim-json'
-Bundle 'camelcasemotion'
-Bundle 'fatih/vim-go'
-Bundle 'elixir-lang/vim-elixir'
-Bundle 'wesQ3/vim-windowswap'
-Bundle 'groovyindent-unix'
+set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/usr/local/opt/fzf
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+"Plugin 'ctrlp.vim'
+Plugin 'junegunn/fzf.vim'
+Plugin 'altercation/vim-colors-solarized'
+" Plugin 'gregsexton/MatchTag'
+Plugin 'Valloric/MatchTagAlways'
+Plugin 'tpope/vim-ragtag'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-dispatch'
+Plugin 'UltiSnips'
+Plugin 'honza/vim-snippets'
+Plugin 'The-NERD-Commenter'
+Plugin 'surround.vim'
+Plugin 'kevinw/pyflakes-vim'
+Plugin 'bufkill.vim'
+Plugin 'repeat.vim'
+Plugin 'vim-indent-object'
+"Plugin 'danielroseman/pygd-vim'
+Plugin 'Tagbar'
+Plugin 'jwhitley/vim-matchit'
+"Plugin 'scrooloose/syntastic'
+Plugin 'w0rp/ale'
+Plugin 'scrooloose/nerdtree'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'mileszs/ack.vim'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-endwise'
+Plugin 'kana/vim-textobj-user'
+Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'rizzatti/funcoo.vim'
+Plugin 'rizzatti/dash.vim'
+Plugin 'rodjek/vim-puppet'
+Plugin 'milkypostman/vim-togglelist'
+" Plugin 'rking/ag.vim'
+Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'elzr/vim-json'
+Plugin 'camelcasemotion'
+Plugin 'fatih/vim-go'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'wesQ3/vim-windowswap'
+Plugin 'groovyindent-unix'
+Plugin 'moll/vim-bbye'
+Plugin 'itchyny/lightline.vim'
+call vundle#end()
 filetype plugin indent on
 syntax on
 set backspace=indent,eol,start
@@ -60,7 +68,7 @@ set mouse=a
 " change cursor shape when switching between normal and insert
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
+let g:lightline = { 'colorscheme': 'solarized' }
 set number
 set ruler
 set tabstop=2
@@ -83,6 +91,10 @@ set tildeop
 set hlsearch
 set list
 set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:»,precedes:«
+" always show gutter
+set signcolumn=yes
+set noshowmode   " lightline shows this already
+
 au FileType go set listchars=tab:\ \ ,eol:¬,trail:\ ,extends:»,precedes:«
 " mapping to remove highlight after search
 nnoremap <silent> <leader><space> :noh<cr>
@@ -103,10 +115,17 @@ nnoremap <Tab> <C-w>w
 nnoremap <C-G> 3<C-G>
 
 " configure ctrlp
-let g:ctrlp_working_path_mode = ''
-let g:ctrlp_map = '<leader>t'
-nnoremap <leader>o :CtrlPBuffer<cr>
-nnoremap <leader>y :CtrlPClearCache<cr>
+"let g:ctrlp_working_path_mode = ''
+"let g:ctrlp_map = '<leader>t'
+"nnoremap <leader>o :CtrlPBuffer<cr>
+"nnoremap <leader>y :CtrlPClearCache<cr>
+
+" configure fzf
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+nmap <leader>t :FZF<CR>
+nmap <leader>o :Buffers<CR>
+nmap <leader>a :GFiles?<CR>
+autocmd! VimEnter * command! -nargs=* -complete=file AgC :call fzf#vim#ag_raw(<q-args>)
 
 " sensible navigation in command mode
 cnoremap <C-a>  <Home>
@@ -152,6 +171,10 @@ nmap <silent> <C-n> :NERDTreeToggle<CR>
 "nmap <silent> <S-F6> :NERDTreeToggle<CR><C-w><Right>:NERDTreeFind<CR>
 "nmap ; :
 "let NERDTreeIgnore=['\~$', '\.pyc']
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
 set wildignore+=*.jpg,*.gif,*.pyc,*/core/static/javascript,*/core/static/styles/trogedit,*/carrierwave-tmp,*/tmp,*/node_modules
 " convert from foo.bar to foo['bar']
 nmap <leader>p ysaw'ysa']hx
@@ -193,3 +216,4 @@ endfunction
 nnoremap <silent> <leader>f :call FindFunctionsAndClasses()<CR>
 
 let g:syntastic_check_on_wq = 0
+"let g:syntastic_ruby_checkers = ['mri', 'rubocop']
