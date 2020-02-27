@@ -12,6 +12,7 @@ function get_base {
 }
 gc() { builtin cd "$HOME/gc/$1"; }
 alias gcp="cd ~/gc/payments-service"
+alias gcbi="cd ~/gc/payments-service/plugins/banking_integrations"
 _gc() {
     local cur files
     COMPREPLY=()
@@ -24,13 +25,16 @@ complete -F _gc gc
 
 alias gu="git checkout master && git pull"
 alias rc="bundle exec rails c"
+alias brc="bundle && bundle exec rails c"
 alias diffocop="git diff origin/master --name-only --diff-filter=ACMRTUXB | grep '\.rb$' | tr '\n' ' ' | xargs bundle exec rubocop"
 newdraupnir() {
-  eval $(draupnir-client new)
+  eval $(draupnir new)
   export PGDATABASE=gc_paysvc_live
+  bidraupnir
 }
 setdraupnir() {
-  eval $(drapnir-client env $1)
+  eval $(draupnir env $1)
+  bidraupnir
   export PGDATABASE=gc_paysvc_live
 }
 bidraupnir() {
@@ -44,6 +48,17 @@ undraupnir() {
     unset $i BANKING_INTEGRATIONS_$i;
   done
 }
+showdraupnir() {
+  for i in PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE; do
+    echo "$i: ${!i}"
+  done
+  for i in PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE; do
+    ii=BANKING_INTEGRATIONS_$i
+    echo "BANKING_INTEGRATIONS_$i: ${!ii}"
+  done
+}
+
+alias listdraupnir="draupnir instances list"
 
 export NVM_DIR=~/.nvm
 source /usr/local/opt/nvm/nvm.sh
@@ -84,3 +99,8 @@ function start_agent {
 if [ -f ~/.tokens ]; then
   . ~/.tokens
 fi
+
+# Spring is more trouble than it's worth
+export DISABLE_SPRING=1
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

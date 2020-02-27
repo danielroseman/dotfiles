@@ -65,6 +65,7 @@ set mouse=a
 " fix bracket highlighting - not needed with solarized scheme
 "highlight MatchParen cterm=bold ctermfg=8 ctermbg=0
 "hi ColorColumn ctermbg=blue
+hi gitcommitOverflow ctermbg=red
 " change cursor shape when switching between normal and insert
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
@@ -124,8 +125,16 @@ nnoremap <C-G> 3<C-G>
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nmap <leader>t :FZF<CR>
 nmap <leader>o :Buffers<CR>
-nmap <leader>a :GFiles?<CR>
+nmap <leader>gs :GFiles?<CR>
+nmap <leader>gc :BCommits<CR>
+nmap <leader>gg :call fzf#vim#ag_raw(expand('<cword>'))<CR>
+
 autocmd! VimEnter * command! -nargs=* -complete=file AgC :call fzf#vim#ag_raw(<q-args>)
+
+" configure ale
+nmap <leader>ad <Plug>(ale_go_to_definition)
+nmap <leader>ar <Plug>(ale_find_references)
+let g:ale_ruby_rubocop_executable='bundle'
 
 " sensible navigation in command mode
 cnoremap <C-a>  <Home>
@@ -147,7 +156,7 @@ nmap <silent> <leader>d <Plug>DashSearch
 
 noremap gD ?\(def\<bar>class\) <c-r>=expand('<cword>')<cr>\><cr>
 
-nmap <leader>g :TagbarToggle<CR>
+nmap <leader>gt :TagbarToggle<CR>
 
 "au Filetype html,xml,xsl,htmldjango source ~/.vim/scripts/closetag.vim
 " make HTMl defaults sensible - no annoying smartindent
