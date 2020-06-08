@@ -70,7 +70,16 @@ hi gitcommitOverflow ctermbg=red
 " change cursor shape when switching between normal and insert
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-let g:lightline = { 'colorscheme': 'solarized' }
+let g:lightline = {
+      \ 'colorscheme': 'solarized' ,
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified', 'gitbranch' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
 set number
 set ruler
 set tabstop=2
@@ -126,8 +135,15 @@ nmap <leader>o :Buffers<CR>
 nmap <leader>gs :GFiles?<CR>
 nmap <leader>gc :BCommits<CR>
 nmap <leader>gg :call fzf#vim#ag_raw(expand('<cword>'))<CR>
+nmap <leader>gb :call fzf#run(fzf#wrap({'source': 'git for-each-ref --format "%(refname:lstrip=2)" refs/heads', 'sink':function('GitCheckout')}))<CR>
 
 autocmd! VimEnter * command! -nargs=* -complete=file AgC :call fzf#vim#ag_raw(<q-args>)
+
+function! GitCheckout(branch_name)
+  call system('git checkout ' . shellescape(a:branch_name))
+  " silent execute "Git checkout " . a:branch_name
+  " redraw!
+endfunction
 
 " configure ale
 nmap <leader>ad <Plug>(ale_go_to_definition)
