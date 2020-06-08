@@ -4,48 +4,49 @@ set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=/usr/local/opt/fzf
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-"Plugin 'ctrlp.vim'
-Plugin 'junegunn/fzf.vim'
+" Look and feel
 Plugin 'altercation/vim-colors-solarized'
-" Plugin 'gregsexton/MatchTag'
-Plugin 'Valloric/MatchTagAlways'
-Plugin 'tpope/vim-ragtag'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-dispatch'
-Plugin 'UltiSnips'
-Plugin 'honza/vim-snippets'
-Plugin 'The-NERD-Commenter'
-Plugin 'surround.vim'
-Plugin 'kevinw/pyflakes-vim'
-Plugin 'bufkill.vim'
-Plugin 'repeat.vim'
-Plugin 'vim-indent-object'
-"Plugin 'danielroseman/pygd-vim'
-Plugin 'Tagbar'
-Plugin 'jwhitley/vim-matchit'
-"Plugin 'scrooloose/syntastic'
-Plugin 'w0rp/ale'
+Plugin 'itchyny/lightline.vim'
+" File/project/buffer/window navigation
+Plugin 'junegunn/fzf.vim'
+Plugin 'danro/rename.vim'             " :rename to move file
+Plugin 'qpkorr/vim-bufkill'
+Plugin 'wesQ3/vim-windowswap'         " <leader>ww to yank and paste window
 Plugin 'scrooloose/nerdtree'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-endwise'
+Plugin 'majutsushi/tagbar'
+Plugin 'milkypostman/vim-togglelist'  " <leader>l to toggle locationlist
+" Text navigation/editing/selecting
+Plugin 'preservim/nerdcommenter'      " <leader>c<space> to toggle comment
+Plugin 'tpope/vim-endwise'            " auto-insert end tag
+Plugin 'tpope/vim-unimpaired'         " eg ]<Space> to open line above w/o insert
 Plugin 'kana/vim-textobj-user'
-Plugin 'nelstrom/vim-textobj-rubyblock'
-Plugin 'rizzatti/funcoo.vim'
-Plugin 'rizzatti/dash.vim'
-Plugin 'rodjek/vim-puppet'
-Plugin 'milkypostman/vim-togglelist'
-" Plugin 'rking/ag.vim'
-Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'tek/vim-textobj-ruby'         " eg var to select block, vaf for function
+Plugin 'Valloric/MatchTagAlways'      " higlight matching HTML tags
+Plugin 'tpope/vim-surround'           " select/change parens etc
+Plugin 'tpope/vim-repeat'
+Plugin 'michaeljsmith/vim-indent-object'  " vai to select via indentation
+Plugin 'bkad/CamelCaseMotion'         " <leader>w to move via camel case
+Plugin 'ConradIrwin/vim-bracketed-paste'  " automatic :set paste
+" Plugin 'jwhitley/vim-matchit'
+" Linting
+Plugin 'w0rp/ale'
+Plugin 'kevinw/pyflakes-vim'
+Plugin 'tpope/vim-rails'
+" Plugin 'nelstrom/vim-textobj-rubyblock'
+" Syntax highlighting
 Plugin 'elzr/vim-json'
-Plugin 'camelcasemotion'
 Plugin 'fatih/vim-go'
 Plugin 'elixir-lang/vim-elixir'
-Plugin 'wesQ3/vim-windowswap'
+Plugin 'rodjek/vim-puppet'
 Plugin 'groovyindent-unix'
-Plugin 'moll/vim-bbye'
-Plugin 'itchyny/lightline.vim'
+Plugin 'cespare/vim-toml'
+" Misc
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-dispatch'           " make/test asynchronously - :Dispatch
+Plugin 'UltiSnips'
+Plugin 'honza/vim-snippets'           " some default snippets
+Plugin 'rizzatti/funcoo.vim'          " Needed for dash
+Plugin 'rizzatti/dash.vim'            " Look up current word in Dash
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -95,8 +96,10 @@ set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:»,precedes:«
 " always show gutter
 set signcolumn=yes
 set noshowmode   " lightline shows this already
+runtime macros/matchit.vim
 
 au FileType go set listchars=tab:\ \ ,eol:¬,trail:\ ,extends:»,precedes:«
+
 " mapping to remove highlight after search
 nnoremap <silent> <leader><space> :noh<cr>
 " reselect last pasted text, preserving visual mode that was used originally
@@ -107,19 +110,14 @@ nnoremap <leader>ft Vatzf
 vnoremap <silent> in( :<C-U>normal! f(vi(<cr>
 onoremap <silent> in( :<C-U>normal! f(vi(<cr>
 
+" ctrl-c copies to system clipboard
 vnoremap <C-C> "+y
 
-"tab in normal mode switches windows
+" tab in normal mode switches windows
 nnoremap <Tab> <C-w>w
 
-"ctrl-g always shows full path
+" ctrl-g always shows full path
 nnoremap <C-G> 3<C-G>
-
-" configure ctrlp
-"let g:ctrlp_working_path_mode = ''
-"let g:ctrlp_map = '<leader>t'
-"nnoremap <leader>o :CtrlPBuffer<cr>
-"nnoremap <leader>y :CtrlPClearCache<cr>
 
 " configure fzf
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
@@ -148,6 +146,8 @@ cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 cnoremap <Esc>d <S-right><Delete>
 cnoremap <C-g>  <C-c>
+
+let g:camelcasemotion_key = '<leader>'
 
 "autocmd FileType python set ft=python.django sw=2 " For SnipMate
 autocmd FileType python set tw=0 sw=2 sts=2 " no textwrap until I can write a proper formatexpr
