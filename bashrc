@@ -4,15 +4,20 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
+export EDITOR=vim
+
 vima() {
   vim $(git status --porcelain| sed -ne 's/^ M //p')
 }
 function get_base {
   GOV_BASE=$(pwd|sed -n "s/.*\/govuk\/\([^/]*\).*/\1/p")
 }
-gc() { builtin cd "$HOME/gc/$1"; }
-alias gcp="cd ~/gc/payments-service"
-alias gcbi="cd ~/gc/payments-service/plugins/banking_integrations"
+gc() {
+  builtin cd "$HOME/gc/$1";
+  echo -ne "\033]0;$1\007";
+}
+alias gcp="gc payments-service"
+
 _gc() {
     local cur files
     COMPREPLY=()
@@ -21,9 +26,10 @@ _gc() {
     COMPREPLY=( $(compgen -W "${files}" -- ${cur}) )
 }
 complete -F _gc gc
-#PROMPT_COMMAND=get_base
+
 
 alias gu="git checkout master && git pull"
+alias gp="git pull"
 alias rc="bundle exec rails c"
 alias brc="bundle && bundle exec rails c"
 alias diffocop="git diff origin/master --name-only --diff-filter=ACMRTUXB | grep '\.rb$' | tr '\n' ' ' | xargs bundle exec rubocop"
@@ -44,7 +50,7 @@ bidraupnir() {
   export BANKING_INTEGRATIONS_PGDATABASE=gc_banking_integrations_live
 }
 undraupnir() {
-  for i in PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE; do
+  for i in PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE PGSSLROOTCERT PGSSLMODE PGSSLCERT PGSSLKEY; do
     unset $i BANKING_INTEGRATIONS_$i;
   done
 }
@@ -59,6 +65,7 @@ showdraupnir() {
 }
 
 alias listdraupnir="draupnir instances list"
+alias newdrc="newdraupnir && rc"
 
 export NVM_DIR=~/.nvm
 source /usr/local/opt/nvm/nvm.sh
@@ -102,5 +109,7 @@ fi
 
 # Spring is more trouble than it's worth
 export DISABLE_SPRING=1
+
+export BAT_THEME="Solarized (dark)"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
