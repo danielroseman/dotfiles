@@ -1,11 +1,17 @@
 [core]
 	excludesfile = /Users/danielroseman/.gitignore_global
+	attributesfile = /Users/danielroseman/.gitattributes
 [user]
 	name = Daniel Roseman
 	email = danielroseman@gocardless.com
 [rebase]
 	autosquash = true
+	autoStash = true
 [commit]
 	verbose = true
 [diff]
 	noprefix = true
+[fetch]
+	prune = true
+[pull]
+	rebase = true
