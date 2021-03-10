@@ -27,3 +27,10 @@ if defined?(PryByebug)
     pry_instance.run_command Pry.history.to_a.last
   end
 end
+
+
+def req_const(full_path)
+  path = full_path.delete_prefix('app/').delete_prefix('lib/').delete_suffix('.rb')
+  require path
+  path.camelize.constantize
+end

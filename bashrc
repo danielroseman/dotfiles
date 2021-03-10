@@ -33,34 +33,29 @@ alias gp="git pull"
 alias rc="bundle exec rails c"
 alias brc="bundle && bundle exec rails c"
 alias diffocop="git diff origin/master --name-only --diff-filter=ACMRTUXB | grep '\.rb$' | tr '\n' ' ' | xargs bundle exec rubocop"
+
+draupnirdb() {
+  case ${PWD##*/} in
+    frontier) export PGDATABASE=gc_banking_integrations_live;;
+    payments-service) export PGDATABASE=gc_paysvc_live;;
+  esac
+}
 newdraupnir() {
   eval $(draupnir new)
-  export PGDATABASE=gc_paysvc_live
-  bidraupnir
+  draupnirdb
 }
 setdraupnir() {
   eval $(draupnir env $1)
-  bidraupnir
-  export PGDATABASE=gc_paysvc_live
-}
-bidraupnir() {
-  for i in PGHOST PGPORT PGUSER PGPASSWORD; do
-    export BANKING_INTEGRATIONS_$i=${!i};
-  done
-  export BANKING_INTEGRATIONS_PGDATABASE=gc_banking_integrations_live
+  draupnirdb
 }
 undraupnir() {
   for i in PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE PGSSLROOTCERT PGSSLMODE PGSSLCERT PGSSLKEY; do
-    unset $i BANKING_INTEGRATIONS_$i;
+    unset $i;
   done
 }
 showdraupnir() {
   for i in PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE; do
     echo "$i: ${!i}"
-  done
-  for i in PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE; do
-    ii=BANKING_INTEGRATIONS_$i
-    echo "BANKING_INTEGRATIONS_$i: ${!ii}"
   done
 }
 
@@ -113,3 +108,8 @@ export DISABLE_SPRING=1
 export BAT_THEME="Solarized (dark)"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# toggle bluetooth
+alias bt='blueutil -p $((1-$(blueutil -p)))'
+
+alias sftp='with-readline sftp'

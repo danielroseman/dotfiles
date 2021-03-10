@@ -136,11 +136,13 @@ onoremap <silent> in( :<C-U>normal! f(vi(<cr>
 
 " ctrl-c copies to system clipboard
 vnoremap <C-C> "+y
-" <leader>cp copies path of current file to system clipboard
-nnoremap <leader>cf :let @+ = expand("%")<cr>
+" <leader>cf copies path of current file to system clipboard
+nnoremap <silent><leader>cf :let @+ = expand("%")<cr>
+nnoremap <silent><leader>cF :let @+ = expand("%:p")<cr>
 
-" tab in normal mode switches windows
+" tab in normal mode rotates through windows forward, shift-tab backwards
 nnoremap <Tab> <C-w>w
+nnoremap <S-Tab> <C-w>W
 
 " :Qa quits all buffers in all windows
 command! Qa :windo qa
@@ -220,7 +222,6 @@ au Filetype html,xml,xsl,htmldjango set nosi indentexpr= autoindent shiftwidth=2
 
 autocmd FileType python set tw=0 sw=2 sts=2 " no textwrap until I can write a proper formatexpr
 au BufRead,BufNewFile *.json set filetype=json
-au FileType json map <leader>jt  <Esc>:%!/usr/bin/python -mjson.tool<CR>
 au FileType json set foldmethod=indent
 let g:vim_json_syntax_conceal=0
 set foldlevelstart=20
@@ -228,12 +229,17 @@ au Filetype yaml set autoindent
 au Filetype jsonnet set smartindent
 au FileType go set listchars=tab:\ \ ,eol:¬,trail:\ ,extends:»,precedes:«
 
+" autoformat JSON and XML
+au FileType json map <leader>jt  <Esc>:%!/usr/bin/python -mjson.tool<CR>
+au FileType xml map <leader>xt <Esc>:silent %!xmllint --encode UTF-8 --format -<CR>
+
 " basic skeleton for Ruby files
 autocmd BufNewFile *.rb 0r ~/.vim/skeleton.rb
 
 au BufRead,BufNewFile *.md set filetype=markdown textwidth=80 formatoptions=t1
 
 nmap <silent> <C-n> :NERDTreeToggle<CR>
+nmap <leader>nf :NERDTreeFind<CR>
 
 nmap <silent> <leader>d <Plug>DashSearch
 
