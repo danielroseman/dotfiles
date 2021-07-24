@@ -1,56 +1,54 @@
-" Configure vundle
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=/usr/local/opt/fzf
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
+" Configure vim-plug
+call plug#begin('~/.vim/bundle')
 " Look and feel
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'itchyny/lightline.vim'
-Plugin 'Yggdroot/indentLine'
+Plug 'altercation/vim-colors-solarized'
+Plug 'itchyny/lightline.vim'
+Plug 'Yggdroot/indentLine'
 " File/project/buffer/window navigation
-Plugin 'junegunn/fzf.vim'
-Plugin 'danro/rename.vim'             " :rename to move file
-Plugin 'qpkorr/vim-bufkill'
-Plugin 'wesQ3/vim-windowswap'         " <leader>ww to yank and paste window
-Plugin 'scrooloose/nerdtree'
-Plugin 'majutsushi/tagbar'
-Plugin 'milkypostman/vim-togglelist'  " <leader>l to toggle locationlist
+Plug 'junegunn/fzf.vim'
+Plug 'danro/rename.vim'             " :rename to move file
+Plug 'qpkorr/vim-bufkill'
+Plug 'wesQ3/vim-windowswap'         " <leader>ww to yank and paste window
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'milkypostman/vim-togglelist'  " <leader>l to toggle locationlist
 " Text navigation/editing/selecting
-Plugin 'preservim/nerdcommenter'      " <leader>c<space> to toggle comment
-Plugin 'tpope/vim-endwise'            " auto-insert end tag
-Plugin 'tpope/vim-unimpaired'         " eg ]<Space> to open line above w/o insert
-Plugin 'kana/vim-textobj-user'
-Plugin 'tek/vim-textobj-ruby'         " eg var to select block, vaf for function
-Plugin 'Valloric/MatchTagAlways'      " higlight matching HTML tags
-Plugin 'tpope/vim-surround'           " select/change parens etc
-Plugin 'tpope/vim-repeat'
-Plugin 'michaeljsmith/vim-indent-object'  " vai to select via indentation
-Plugin 'bkad/CamelCaseMotion'         " <leader>w to move via camel case
-Plugin 'ConradIrwin/vim-bracketed-paste'  " automatic :set paste
-Plugin 'AndrewRadev/splitjoin.vim'    " gS to split one-liner into multiple lines
+Plug 'preservim/nerdcommenter'      " <leader>c<space> to toggle comment
+Plug 'tpope/vim-endwise'            " auto-insert end tag
+Plug 'tpope/vim-unimpaired'         " eg ]<Space> to open line above w/o insert
+Plug 'kana/vim-textobj-user'
+Plug 'tek/vim-textobj-ruby'         " eg var to select block, vaf for function
+Plug 'Valloric/MatchTagAlways'      " higlight matching HTML tags
+Plug 'tpope/vim-surround'           " select/change parens etc
+Plug 'tpope/vim-repeat'
+Plug 'michaeljsmith/vim-indent-object'  " vai to select via indentation
+Plug 'bkad/CamelCaseMotion'         " <leader>w to move via camel case
+Plug 'ConradIrwin/vim-bracketed-paste'  " automatic :set paste
+Plug 'AndrewRadev/splitjoin.vim'    " gS to split one-liner into multiple lines
 " Linting
-Plugin 'w0rp/ale'
-Plugin 'tpope/vim-rails'
+Plug 'w0rp/ale'
+Plug 'tpope/vim-rails'
 " Syntax
-Plugin 'elzr/vim-json'
-Plugin 'fatih/vim-go'
-Plugin 'google/vim-jsonnet'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'rodjek/vim-puppet'
-Plugin 'groovyindent-unix'
-Plugin 'cespare/vim-toml'
-Plugin 'pedrohdz/vim-yaml-folds'
+Plug 'elzr/vim-json'
+Plug 'fatih/vim-go'
+Plug 'google/vim-jsonnet'
+Plug 'elixir-lang/vim-elixir'
+Plug 'rodjek/vim-puppet'
+Plug 'cespare/vim-toml'
+Plug 'pedrohdz/vim-yaml-folds'
 " Misc
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-dispatch'           " make/test asynchronously - :Dispatch
-Plugin 'UltiSnips'
-Plugin 'honza/vim-snippets'           " some default snippets
-Plugin 'rizzatti/funcoo.vim'          " Needed for dash
-Plugin 'rizzatti/dash.vim'            " Look up current word in Dash
-call vundle#end()
-filetype plugin indent on
-syntax on
+Plug 'tpope/vim-fugitive'           " git commands
+Plug 'tpope/vim-rhubarb'            " enables :GBrowse for GitHub
+Plug 'airblade/vim-gitgutter'       " gutter column shows git status
+Plug 'junegunn/gv.vim'              " :GV to browse commits
+Plug 'tpope/vim-dispatch'           " make/test asynchronously - :Dispatch
+Plug 'SirVer/UltiSnips'
+Plug 'honza/vim-snippets'           " some default snippets
+Plug 'rizzatti/funcoo.vim'          " Needed for dash
+Plug 'rizzatti/dash.vim'            " Look up current word in Dash
+call plug#end()
+
+set rtp+=/usr/local/opt/fzf
 
 set backspace=indent,eol,start
 set number
@@ -68,6 +66,7 @@ set hidden
 set showmatch
 set matchtime=2
 set switchbuf=usetab
+set wildmenu
 set nojoinspaces
 " make ~ into a command (so you can do eg ~aw)
 set tildeop
