@@ -150,7 +150,7 @@ command! Qa :windo qa
 nnoremap <C-G> 3<C-G>
 
 " configure FZF
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+let $FZF_DEFAULT_COMMAND = 'fd --type f'
 " default hide binding of ctrl-/ doesn't work on Mac?
 let g:fzf_preview_window = ['right:50%', 'ctrl-h']
 nmap <leader>t :Files<CR>
