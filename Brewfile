@@ -41,6 +41,7 @@ brew "pinentry"
 brew "postgresql@11", link: true
 brew "pwgen"
 brew "python"
+brew "pyenv"
 brew "qt@5.5", link: true
 brew "rbenv"
 brew "the_silver_searcher"

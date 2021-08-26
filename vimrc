@@ -194,6 +194,7 @@ endfunction
 nmap <leader>ad <Plug>(ale_go_to_definition)
 nmap <leader>ar <Plug>(ale_find_references)
 let g:ale_ruby_rubocop_executable='bundle'
+let g:ale_python_auto_poetry=1
 
 " sensible navigation in command mode
 cnoremap <C-a>  <Home>
