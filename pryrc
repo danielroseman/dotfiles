@@ -16,6 +16,7 @@ Pry.config.prompt = Pry::Prompt.new(
   end
 end
 )
+CodeRay::Encoders::Terminal::TOKEN_COLORS[:string][:self] = "\e[33m"
 
 
 if defined?(PryByebug)

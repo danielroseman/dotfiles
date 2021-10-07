@@ -2,6 +2,7 @@
 call plug#begin('~/.vim/bundle')
 " Look and feel
 Plug 'altercation/vim-colors-solarized'
+Plug 'gruvbox-community/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
 " File/project/buffer/window navigation
@@ -82,18 +83,23 @@ set cc=80
 set mouse=a
 
 set background=dark
-colorscheme solarized
-" gutter comes out the wrong color in solarized if t_Co > 16
-hi SignColumn ctermbg=8
+" set t_Co=16
+" colorscheme solarized
+" " gutter comes out the wrong color in solarized if t_Co > 16
+" hi SignColumn ctermbg=8
 " fix bracket highlighting, especially in conjunction with MatchTag
-highlight MatchParen cterm=bold ctermfg=0 ctermbg=10
+" highlight MatchParen cterm=bold ctermfg=0 ctermbg=10
+set termguicolors
+let g:gruvbox_contrast_dark="hard"
+let g:gruvbox_invert_selection=0
+colorscheme gruvbox
 hi gitcommitOverflow ctermbg=red
 " change cursor shape when switching between normal and insert
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 let g:lightline = {
-      \ 'colorscheme': 'solarized' ,
+      \ 'colorscheme': 'gruvbox' ,
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'relativepath', 'modified' ] ],

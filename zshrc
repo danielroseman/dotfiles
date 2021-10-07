@@ -94,8 +94,9 @@ fi
 # Spring is more trouble than it's worth
 export DISABLE_SPRING=1
 
-export BAT_THEME="Solarized (dark)"
+export BAT_THEME="gruvbox-dark"
 
+export FZF_DEFAULT_OPTS='--color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f;info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54'
 export FZF_DEFAULT_COMMAND='fd --type f'
 _fzf_compgen_path() {
   fd --hidden --follow --exclude ".git" . "$1"
