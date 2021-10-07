@@ -15,5 +15,20 @@
 	prune = true
 [pull]
 	rebase = true
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[delta]
+    features = line-numbers
+    syntax-theme = gruvbox-dark
+    plus-style = syntax "#003800"
+    minus-style = syntax "#3f0001"
+    navigate = true
+[interactive]
+    diffFilter = delta --color-only
 [alias]
 	cleanup = "!git branch --merged | grep -v '\\*\\|master\\|develop\\|main' | xargs -n 1 git branch -d"
+	can = commit --amend --no-edit
+	fp = push -f origin head
