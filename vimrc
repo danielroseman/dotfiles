@@ -76,6 +76,7 @@ set list
 set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:»,precedes:«
 " always show gutter
 set signcolumn=yes
+set showbreak=↪  " show a line has been wrapped
 set noshowmode   " lightline shows this already
 runtime macros/matchit.vim
 set autoread
@@ -201,6 +202,11 @@ nmap <leader>ad <Plug>(ale_go_to_definition)
 nmap <leader>ar <Plug>(ale_find_references)
 let g:ale_ruby_rubocop_executable='bundle'
 let g:ale_python_auto_poetry=1
+let g:ale_completion_enabled = 1
+let g:ale_linters = {
+\   'python': ['flake8', 'mypy', 'jedils'],
+\}
+
 
 " sensible navigation in command mode
 cnoremap <C-a>  <Home>
