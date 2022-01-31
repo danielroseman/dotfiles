@@ -1,16 +1,34 @@
+[credential]
+	helper = 
+	helper = store --file /opt/dev/var/private/git_credential_store
 [core]
+	commitGraph = true
 	excludesfile = /Users/danielroseman/.gitignore_global
 	attributesfile = /Users/danielroseman/.gitattributes
+[diff]
+	algorithm = patience
+	noprefix = true
+[gc]
+	writeCommitGraph = true
+[protocol]
+	version = 2
+[url "https://github.com/Shopify/"]
+	insteadOf = git@github.com:Shopify/
+	insteadOf = git@github.com:shopify/
+	insteadOf = ssh://git@github.com/Shopify/
+	insteadOf = ssh://git@github.com/shopify/
 [user]
 	name = Daniel Roseman
-	email = danielroseman@gocardless.com
+	email = daniel.roseman@shopify.com
+	signingkey = ACC4008554E24C6B1ADAFD1C86C755229319006E
+[gpg]
+	program = /nix/var/nix/gcroots/dev-profiles/dev-support-dev-profile/bin/gpg-auto-pin
+[commit]
+	gpgSign = true
+	verbose = true
 [rebase]
 	autosquash = true
 	autoStash = true
-[commit]
-	verbose = true
-[diff]
-	noprefix = true
 [fetch]
 	prune = true
 [pull]

@@ -14,16 +14,17 @@ zstyle ':vcs_info:git:*' formats '%F{240}%b%f'
 zstyle ':vcs_info:*' enable git
 
 autoload -Uz compinit && compinit
-gc() {
-  builtin cd "$HOME/gc/$1";
-  echo -ne "\033]0;$1\007";
-}
-alias gcp="gc payments-service"
+# gc() {
+  # builtin cd "$HOME/gc/$1";
+  # echo -ne "\033]0;$1\007";
+# }
+# alias gcp="gc payments-service"
 
-_gc() {
-  _path_files -/ -W ~/gc
-}
-compdef _gc gc
+# _gc() {
+  # _path_files -/ -W ~/gc
+# }
+# compdef _gc gc
+alias dcd="dev cd"
 
 WORDCHARS="${WORDCHARS//[-\/]/}"
 
@@ -35,55 +36,9 @@ alias brc="bundle && bundle exec rails c"
 alias rspec="nocorrect bundle exec rspec"
 alias diffocop="git diff origin/master --name-only --diff-filter=ACMRTUXB | grep '\.rb$' | tr '\n' ' ' | xargs bundle exec rubocop"
 
-draupnirdb() {
-  case ${PWD##*/} in
-    frontier) export PGDATABASE=gc_banking_integrations_live;;
-    payments-service) export PGDATABASE=gc_paysvc_live;;
-  esac
-}
-newdraupnir() {
-  eval $(draupnir new)
-  draupnirdb
-}
-setdraupnir() {
-  eval $(draupnir env $1)
-  draupnirdb
-}
-undraupnir() {
-  for i in PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE PGSSLROOTCERT PGSSLMODE PGSSLCERT PGSSLKEY; do
-    unset $i;
-  done
-}
-showdraupnir() {
-  for i in PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE; do
-    echo "$i: ${(P)i}"
-  done
-}
-getdraupnir() {
-  INSTANCE=`draupnir instances list | cut -d ' ' -f1`
-  eval $(draupnir env $INSTANCE)
-  draupnirdb
-}
-
-setdrc() {
-  eval $(draupnir env $1)
-  draupnirdb
-  rc
-}
-
-alias listdraupnir="draupnir instances list"
-alias newdrc="newdraupnir && rc"
-alias getdrc="getdraupnir && rc"
-
-# Gcloud
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-
-VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-source /usr/local/bin/virtualenvwrapper.sh
 export PROJECT_HOME=/Users/danielroseman/Projects
 
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 
 SSH_ENV="$HOME/.ssh/environment"
 
@@ -96,7 +51,8 @@ export DISABLE_SPRING=1
 
 export BAT_THEME="gruvbox-dark"
 
-export FZF_DEFAULT_OPTS='--color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f;info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54'
+export FZF_DEFAULT_OPTS="--color='fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f,info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54'"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:5:hidden:wrap --bind 'ctrl-h:toggle-preview'"
 export FZF_DEFAULT_COMMAND='fd --type f'
 _fzf_compgen_path() {
   fd --hidden --follow --exclude ".git" . "$1"
@@ -113,7 +69,14 @@ alias bt='blueutil -p $((1-$(blueutil -p)))'
 
 alias sftp='with-readline sftp'
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
 export PATH="$HOME/.poetry/bin:$PATH"
+
+[ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
+if [ -e /Users/danielroseman/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/danielroseman/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+[[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }
+
+[[ -x /usr/local/bin/brew ]] && eval $(/usr/local/bin/brew shellenv)

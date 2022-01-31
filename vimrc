@@ -37,6 +37,8 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'rodjek/vim-puppet'
 Plug 'cespare/vim-toml'
 Plug 'pedrohdz/vim-yaml-folds'
+Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'tpope/vim-sleuth'
 " Misc
 Plug 'tpope/vim-fugitive'           " git commands
 Plug 'tpope/vim-rhubarb'            " enables :GBrowse for GitHub
@@ -166,6 +168,7 @@ nmap <leader>gm :History<CR>
 nmap <leader>gh :History:<CR>
 nmap <leader>gs :GFiles?<CR>
 nmap <leader>gc :BCommits<CR>
+nmap <leader>gt :BTags<CR>
 nmap <leader>gg :call fzf#vim#ag(expand('<cword>'), fzf#vim#with_preview())<CR>
 nmap <leader>gb :call fzf#run(fzf#wrap({'source': 'git for-each-ref --format "%(refname:lstrip=2)" --sort="-authordate" refs/heads', 'sink':function('GitCheckout')}))<CR>
 
@@ -194,7 +197,7 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit' }
 
 function! GitCheckout(branch_name)
-  call system('git checkout ' . shellescape(a:branch_name))
+  echo system('git checkout ' . shellescape(a:branch_name))
 endfunction
 
 " configure ALE
@@ -223,7 +226,7 @@ cnoremap <C-g>  <C-c>
 
 let g:camelcasemotion_key = '<leader>'
 
-nmap <leader>gt :TagbarToggle<CR>
+" nmap <leader>gt :TagbarToggle<CR>
 
 " change size of iTerm to allow 2 or 3 80-column windows
 nmap <leader>w2 <C-W>l<C-W>l:q<CR>:!printf '\e[8;60;186t'<CR><CR><C-W>=

@@ -1,0 +1,108 @@
+local cmdctrl = {"cmd", "ctrl"}
+
+hs.loadSpoon("ShiftIt")
+spoon.ShiftIt:bindHotkeys({})
+
+
+-- hs.loadSpoon("MoveSpaces")
+-- spoon.MoveSpaces:bindHotkeys({space_right = { cmdctrl, 'right'}, space_left = { cmdctrl, 'left'}})
+
+local spaces = require("hs._asm.undocumented.spaces")
+alcm = {"⌥", "⌘"}
+
+local log = hs.logger.new('MoveSpaces', 3)
+
+
+-- get primary screen
+-- while screen:toWest not nil, get it
+-- for spaces in that screen: append to spaces_in_order
+-- get east, etc
+function SpacesOrder()
+  local layout = spaces.layout()
+  local screen = hs.screen.primaryScreen()
+  local west = screen:toWest()
+  while west do
+    screen = west
+    west = screen:toWest()
+  end
+
+  local spaces = {}
+  while screen do
+    hs.fnutils.concat(spaces, layout[screen:getUUID()])
+    -- for pos, id in pairs(layout[screen:getUUID()]) do
+      -- table.insert(spaces, id)
+    -- end
+    screen = screen:toEast()
+  end
+  return spaces
+end
+
+function CycleSpace(direction)
+  local order = SpacesOrder()
+  local win = hs.window.focusedWindow()
+  local current = win:spaces()[1]
+  local pos = hs.fnutils.indexOf(order, current)
+  local target = direction + pos
+  log.i('moving to space', target)
+  MoveWindowToSpace(target)
+end
+
+hs.hotkey.bind(cmdctrl, 'left', function() CycleSpace(-1) end)
+hs.hotkey.bind(cmdctrl, 'right', function() CycleSpace(1) end)
+
+-- move current window to the space sp
+function MoveWindowToSpace(sp)
+   local win = hs.window.focusedWindow()      -- current window
+   -- local uuid = win:screen():spacesUUID()     -- uuid for current screen
+   -- local spaceID = spaces.layout()[uuid][sp]  -- internal index for sp
+   -- local allSpaces = spaces.query(spaces.masks['allSpaces'])
+   -- local spaceID = allSpaces[sp]
+   local spaceID = SpacesOrder()[sp]
+   if spaceID == nil then
+     log.e('no such space', sp)
+     return
+   end
+   local destScreen = spaces.spaceScreenUUID(spaceID)
+   local screen = win:screen()
+   spaces.moveWindowToSpace(win:id(), spaceID) -- move window to new space
+   if screen:getUUID() ~= destScreen then
+     win:moveToScreen(destScreen, true, true)
+     -- cross-window moves need moving again, don't know why
+     spaces.moveWindowToSpace(win:id(), spaceID) 
+     log.i('moved to screen', destScreen)
+   end
+   -- currentSpaces = spaces.query(spaces.masks.currentSpaces)
+   -- if not hs.fnutils.contains(currentSpaces, spaceID) then
+     -- spaces.changeToSpace(spaceID, true)              -- follow window to new space
+     -- log.i('changed to space', spaceID)
+   -- end
+   log.i('moved to space', sp, 'id', spaceID)
+end
+
+hs.hotkey.bind(cmdctrl, '1', function() MoveWindowToSpace(1) end)
+hs.hotkey.bind(cmdctrl, '2', function() MoveWindowToSpace(2) end)
+hs.hotkey.bind(cmdctrl, '3', function() MoveWindowToSpace(3) end)
+-- hs.hotkey.bind(cmdctrl, '4', function() MoveWindowToSpace(4) end)
+-- hs.hotkey.bind(cmdctrl, '5', function() MoveWindowToSpace(5) end)
+
+-- for debugging - show current window or space id
+hs.hotkey.bind(alcm, '/', function() hs.alert(hs.window.focusedWindow():id()) end)
+hs.hotkey.bind(cmdctrl, '/', function() hs.alert(hs.window.focusedWindow():spaces()[1]) end)
+--
+--
+local function focus(direction)
+  local fn = "focusWindow" .. (direction:gsub("^%l", string.upper))
+
+  return function()
+    local win = hs.window.focusedWindow()
+    if not win then return end
+
+    win[fn]()
+  end
+end
+
+hs.hotkey.bind(cmdctrl, "k", focus("north"))
+hs.hotkey.bind(cmdctrl, "l", focus("east"))
+hs.hotkey.bind(cmdctrl, "j", focus("south"))
+hs.hotkey.bind(cmdctrl, "h", focus("west"))
+
