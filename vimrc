@@ -6,6 +6,7 @@ Plug 'gruvbox-community/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
 " File/project/buffer/window navigation
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'danro/rename.vim'             " :rename to move file
 Plug 'qpkorr/vim-bufkill'
@@ -39,6 +40,7 @@ Plug 'cespare/vim-toml'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'tpope/vim-sleuth'
+Plug 'Shopify/vim-sorbet'
 " Misc
 Plug 'tpope/vim-fugitive'           " git commands
 Plug 'tpope/vim-rhubarb'            " enables :GBrowse for GitHub
@@ -50,8 +52,6 @@ Plug 'honza/vim-snippets'           " some default snippets
 Plug 'rizzatti/funcoo.vim'          " Needed for dash
 Plug 'rizzatti/dash.vim'            " Look up current word in Dash
 call plug#end()
-
-set rtp+=/usr/local/opt/fzf
 
 set backspace=indent,eol,start
 set number
@@ -160,6 +160,7 @@ nnoremap <C-G> 3<C-G>
 
 " configure FZF
 let $FZF_DEFAULT_COMMAND = 'fd --type f'
+" let $FZF_DEFAULT_COMMAND = 'rg --files --sort path --no-ignore-vcs'
 " default hide binding of ctrl-/ doesn't work on Mac?
 let g:fzf_preview_window = ['right:50%', 'ctrl-h']
 nmap <leader>t :Files<CR>
@@ -169,7 +170,8 @@ nmap <leader>gh :History:<CR>
 nmap <leader>gs :GFiles?<CR>
 nmap <leader>gc :BCommits<CR>
 nmap <leader>gt :BTags<CR>
-nmap <leader>gg :call fzf#vim#ag(expand('<cword>'), fzf#vim#with_preview())<CR>
+" nmap <leader>gg :call fzf#vim#ag(expand('<cword>'), fzf#vim#with_preview())<CR>
+nmap <leader>gg :call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape(expand('<cword>')), 1, fzf#vim#with_preview())<CR>
 nmap <leader>gb :call fzf#run(fzf#wrap({'source': 'git for-each-ref --format "%(refname:lstrip=2)" --sort="-authordate" refs/heads', 'sink':function('GitCheckout')}))<CR>
 
 command! -nargs=* -complete=file AgC :call fzf#vim#ag_raw(<q-args>, fzf#vim#with_preview())
@@ -204,12 +206,15 @@ endfunction
 nmap <leader>ad <Plug>(ale_go_to_definition)
 nmap <leader>ar <Plug>(ale_find_references)
 let g:ale_ruby_rubocop_executable='bundle'
+let g:ale_ruby_sorbet_enable_watchman=1
 let g:ale_python_auto_poetry=1
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
 \   'python': ['flake8', 'mypy', 'jedils'],
 \}
 
+" saveas in current directory
+command! -nargs=* -complete=file Lsaveas saveas %:h/<args>
 
 " sensible navigation in command mode
 cnoremap <C-a>  <Home>
@@ -250,6 +255,9 @@ au FileType xml map <leader>xt <Esc>:silent %!xmllint --encode UTF-8 --format -<
 
 " basic skeleton for Ruby files
 autocmd BufNewFile *.rb 0r ~/.vim/skeleton.rb
+
+let g:splitjoin_ruby_curly_braces = 0
+let g:splitjoin_trailing_comma = 1
 
 au BufRead,BufNewFile *.md set filetype=markdown textwidth=80 formatoptions=t1
 
