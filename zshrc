@@ -14,21 +14,14 @@ zstyle ':vcs_info:git:*' formats '%F{240}%b%f'
 zstyle ':vcs_info:*' enable git
 
 autoload -Uz compinit && compinit
-# gc() {
-  # builtin cd "$HOME/gc/$1";
-  # echo -ne "\033]0;$1\007";
-# }
-# alias gcp="gc payments-service"
-
-# _gc() {
-  # _path_files -/ -W ~/gc
-# }
-# compdef _gc gc
 alias dcd="dev cd"
+alias dvt="dev vault tls production shopify certify/elasticsearch/client/intermediate/v2 es-client --cn arrive-server-production-unrestricted && dev vault tls production shopify certify/elasticsearch/client/intermediate/v2 es-client --cn shop-discovery-pipeline-staging-unrestricted"
+alias disco="nocorrect disco"
 
 WORDCHARS="${WORDCHARS//[-\/]/}"
 
-alias gu="git checkout master && git pull"
+function default_branch() { git symbolic-ref --short refs/remotes/origin/HEAD| sed 's@^origin/@@'  }
+alias gu="git checkout $(git symbolic-ref --short refs/remotes/origin/HEAD| sed 's@^origin/@@') && git pull"
 alias gp="git pull"
 alias gb='branch=$(git for-each-ref --format "%(refname:lstrip=2)" --sort="-authordate" refs/heads | fzf) && git checkout $branch'
 alias rc="bundle exec rails c"
@@ -64,6 +57,8 @@ _fzf_compgen_dir() {
 }
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
 # toggle bluetooth
 alias bt='blueutil -p $((1-$(blueutil -p)))'
 
@@ -79,4 +74,4 @@ if [ -e /Users/danielroseman/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/
 
 [[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }
 
-[[ -x /usr/local/bin/brew ]] && eval $(/usr/local/bin/brew shellenv)
+[[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
