@@ -12,6 +12,7 @@ source ~/.config/nvim/plugins/navigation.vim
 source ~/.config/nvim/plugins/autocomplete.vim
 source ~/.config/nvim/plugins/lint.vim
 source ~/.config/nvim/plugins/syntax.vim
+source ~/.config/nvim/plugins/git.vim
 
 " Text navigation/editing/selecting
 Plug 'preservim/nerdcommenter'      " <leader>c<space> to toggle comment
@@ -22,10 +23,6 @@ Plug 'AndrewRadev/splitjoin.vim'    " gS to split one-liner into multiple lines
 
 " Misc
 Plug 'tpope/vim-rails'
-Plug 'tpope/vim-fugitive'           " git commands
-Plug 'tpope/vim-rhubarb'            " enables :GBrowse for GitHub
-Plug 'airblade/vim-gitgutter'       " gutter column shows git status
-Plug 'junegunn/gv.vim'              " :GV to browse commits
 Plug 'honza/vim-snippets'           " some default snippets
 call plug#end()
 
@@ -168,5 +165,4 @@ let g:indent_blankline_use_treesitter_scope = v:true
 
 " convert from foo.bar to foo['bar']
 nmap <leader>p ysaw'ysa']hx
-
 
