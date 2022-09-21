@@ -18,10 +18,12 @@ alias dcd="dev cd"
 alias dvt="dev vault tls production shopify certify/elasticsearch/client/intermediate/v2 es-client --cn arrive-server-production-unrestricted && dev vault tls production shopify certify/elasticsearch/client/intermediate/v2 es-client --cn shop-discovery-pipeline-staging-unrestricted"
 alias disco="nocorrect disco"
 
-WORDCHARS="${WORDCHARS//[-\/]/}"
+# WORDCHARS="${WORDCHARS//[-\/]/}"
+autoload -U select-word-style
+select-word-style bash
 
 function default_branch() { git symbolic-ref --short refs/remotes/origin/HEAD| sed 's@^origin/@@'  }
-alias gu="git checkout $(git symbolic-ref --short refs/remotes/origin/HEAD| sed 's@^origin/@@') && git pull"
+alias gu='git checkout $(git symbolic-ref --short refs/remotes/origin/HEAD| sed "s@^origin/@@") && git pull'
 alias gp="git pull"
 alias gb='branch=$(git for-each-ref --format "%(refname:lstrip=2)" --sort="-authordate" refs/heads | fzf) && git checkout $branch'
 alias rc="bundle exec rails c"
