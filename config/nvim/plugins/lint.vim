@@ -3,7 +3,6 @@ Plug 'neovim/nvim-lspconfig'
 " Plug 'williamboman/nvim-lsp-installer'
 Plug 'folke/lsp-colors.nvim'
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
-Plug 'folke/trouble.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 
@@ -55,7 +54,6 @@ function lint_setup()
     },
   })
 
-  require("trouble").setup {}
   local null_ls = require("null-ls")
 
   null_ls.setup({
@@ -96,11 +94,13 @@ function lint_setup()
   )
   require('lspconfig.ui.windows').default_options.border = 'single'
 
-  local opts = { noremap=true, silent=true }
-  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+  local setkey = function(key, func, desc)
+    vim.keymap.set('n', key, func, { noremap=true, silent=true, desc =desc })
+  end
+  setkey('<space>e', vim.diagnostic.open_float, "diagnostic.open_float")
+  setkey('[d', vim.diagnostic.goto_prev, "diagnostic.goto_prev")
+  setkey(']d', vim.diagnostic.goto_next, "diagnostic.goto_next")
+  setkey('<space>q', vim.diagnostic.setloclist, "diagnostic.setloclist")
 
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
@@ -108,29 +108,25 @@ function lint_setup()
 
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wl', function()
+    local setkey = function(key, func, desc)
+      vim.keymap.set('n', key, func, { noremap=true, silent=true, buffer=bufnr, desc =desc })
+    end
+    setkey('gD', vim.lsp.buf.declaration, "lsp.declaration")
+    setkey('gd', vim.lsp.buf.definition, "lsp.definition")
+    setkey('K', vim.lsp.buf.hover, "lsp.hover")
+    setkey('gi', vim.lsp.buf.implementation, "lsp.implementation")
+    setkey('<C-k>', vim.lsp.buf.signature_help, "lsp.signature_help")
+    setkey('<space>wa', vim.lsp.buf.add_workspace_folder, "lsp.add_workspace_folder")
+    setkey('<space>wr', vim.lsp.buf.remove_workspace_folder, "lsp.remove_workspace_folder")
+    setkey('<space>wl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, bufopts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+    end, "lsp.list_workspace_folders")
+    setkey('<space>D', vim.lsp.buf.type_definition, "lsp.type_definition")
+    setkey('<space>rn', vim.lsp.buf.rename, "lsp.rename")
+    setkey('<space>ca', vim.lsp.buf.code_action, "lsp.code_action")
+    setkey('gr', vim.lsp.buf.references, "lsp.references")
+    setkey('<space>f', vim.lsp.buf.formatting, "lsp.formatting")
   end
-  vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>xl", "<cmd>Trouble loclist<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>xq", "<cmd>Trouble quickfix<cr>", opts)
-  vim.api.nvim_set_keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts)
 
   if not configs.ruby_lsp then
    configs.ruby_lsp = {
