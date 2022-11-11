@@ -17,6 +17,14 @@ lua <<EOF
 
     fzf = require('fzf-lua')
     fzf.setup({
+      fzf_opts = {
+        ['--layout'] = 'default',
+      },
+      previewers = {
+        git_diff = {
+          pager = "delta --width=$FZF_PREVIEW_COLUMNS",
+        }
+      },
       lsp = {
         symbols = {
           fzf_opts = { ["--nth"] = "2" }, -- don't match on symbol type
@@ -31,6 +39,7 @@ lua <<EOF
     vim.keymap.set('n', '<leader>gs', fzf.git_status, {desc = "fzf.git_status"})
     vim.keymap.set('n', '<leader>gc', fzf.git_bcommits, {desc = "fzf.git_bcommits"})
     vim.keymap.set('n', '<leader>gb', fzf.git_branches, {desc = "fzf.git_branches"})
+    vim.keymap.set('n', '<leader>st', fzf.git_stash, {desc = "fzf.git_stash"})
     vim.keymap.set('n', '<leader>gt', fzf.btags, {desc = "fzf.btags"})
     vim.keymap.set('n', '<leader>gg', fzf.grep_cword, {desc = "fzf.grep_cword"})
     vim.keymap.set('n', '<leader>rg', fzf.grep, {desc = "fzf.grep"})

@@ -37,7 +37,11 @@ function lint_setup()
   sign({name = 'DiagnosticSignHint', text = '⚑'})
   sign({name = 'DiagnosticSignInfo', text = ''})
 
-  require("lsp_lines").setup()
+  local lsp_lines = require("lsp_lines")
+  lsp_lines.setup()
+  vim.keymap.set(
+    "", "<leader>dl", lsp_lines.toggle, { desc = "Toggle lsp_lines" }
+  )
   vim.diagnostic.config({
     virtual_text = false,
     signs = true,
