@@ -42,6 +42,10 @@ if [ -f ~/.tokens ]; then
   . ~/.tokens
 fi
 
+if [ "$SPIN" ]; then
+  alias ls='ls --color'
+fi
+
 # Spring is more trouble than it's worth
 export DISABLE_SPRING=1
 
