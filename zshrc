@@ -26,6 +26,7 @@ function default_branch() { git symbolic-ref --short refs/remotes/origin/HEAD| s
 alias gu='git checkout $(git symbolic-ref --short refs/remotes/origin/HEAD| sed "s@^origin/@@") && git pull'
 alias gp="git pull"
 alias gb='branch=$(git for-each-ref --format "%(refname:lstrip=2)" --sort="-authordate" refs/heads | fzf) && git checkout $branch'
+alias gcf='git commit --fixup "$(git log --oneline | fzf --no-sort | awk "{print \$1}")"'
 alias rc="bundle exec rails c"
 alias brc="bundle && bundle exec rails c"
 alias rspec="nocorrect bundle exec rspec"
