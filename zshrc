@@ -44,6 +44,8 @@ fi
 
 if [ "$SPIN" ]; then
   alias ls='ls --color'
+  alias bat="batcat"
+  PROMPT='%m:%- %# '
 fi
 
 # Spring is more trouble than it's worth
