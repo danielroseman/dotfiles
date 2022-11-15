@@ -2,7 +2,7 @@ setopt CORRECT
 setopt CORRECT_ALL
 setopt AUTO_CD
 export CLICOLOR=1
-export EDITOR=vim
+export EDITOR=nvim
 
 PROMPT='%~ %# '
 
@@ -18,9 +18,9 @@ alias dcd="dev cd"
 alias dvt="dev vault tls production shopify certify/elasticsearch/client/intermediate/v2 es-client --cn arrive-server-production-unrestricted && dev vault tls production shopify certify/elasticsearch/client/intermediate/v2 es-client --cn shop-discovery-pipeline-staging-unrestricted"
 alias disco="nocorrect disco"
 
-# WORDCHARS="${WORDCHARS//[-\/]/}"
 autoload -U select-word-style
 select-word-style bash
+bindkey -e
 
 function default_branch() { git symbolic-ref --short refs/remotes/origin/HEAD| sed 's@^origin/@@'  }
 alias gu='git checkout $(git symbolic-ref --short refs/remotes/origin/HEAD| sed "s@^origin/@@") && git pull'
@@ -45,7 +45,7 @@ fi
 if [ "$SPIN" ]; then
   alias ls='ls --color'
   alias bat="batcat"
-  PROMPT='%m:%- %# '
+  PROMPT='%m:%~ %# '
 fi
 
 # Spring is more trouble than it's worth
