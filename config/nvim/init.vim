@@ -110,6 +110,9 @@ nnoremap <leader>ft Vatzf
 vnoremap <silent> in( :<C-U>normal! f(vi(<cr>
 onoremap <silent> in( :<C-U>normal! f(vi(<cr>
 
+if $SPIN
+  let g:clipboard = {'copy': {'+': 'pbcopy', '*': 'pbcopy'}, 'paste': {'+': 'pbpaste', '*': 'pbpaste'}, 'name': 'pbcopy', 'cache_enabled': 1}
+endif
 " ctrl-c copies to system clipboard
 vnoremap <C-C> "+y
 " <leader>cf copies path of current file to system clipboard
