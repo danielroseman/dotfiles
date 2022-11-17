@@ -8,6 +8,9 @@ for f in $FILES; do
 done
 ln -sf $SOURCE/config/nvim ~/.config/nvim
 
+pyenv virtualenv py3nvim
+$(pyenv prefix py3nvim)/bin/pip install pynvim jedi-language-server
+
 echo "installing vim-plug"
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'

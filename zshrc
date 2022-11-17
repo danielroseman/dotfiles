@@ -17,6 +17,7 @@ autoload -Uz compinit && compinit
 alias dcd="dev cd"
 alias dvt="dev vault tls production shopify certify/elasticsearch/client/intermediate/v2 es-client --cn arrive-server-production-unrestricted && dev vault tls production shopify certify/elasticsearch/client/intermediate/v2 es-client --cn shop-discovery-pipeline-staging-unrestricted"
 alias disco="nocorrect disco"
+alias spa='`spin shell -s` -t "tmux -CC attach"'
 
 autoload -U select-word-style
 select-word-style bash

@@ -1,4 +1,6 @@
-let g:python3_host_prog = '/Users/danielroseman/.pyenv/virtualenvs/py3nvim/bin/python'
+let g:python3_env = trim(system('pyenv prefix py3nvim'))
+let g:python3_host_prog = g:python3_env . '/bin/python'
+
 "
 " Configure vim-plug
 call plug#begin()

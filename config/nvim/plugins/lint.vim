@@ -9,7 +9,7 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 lua <<EOF
 function lint_setup()
     -- Setup lspconfig.
-    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 
   local nvim_lsp = require'lspconfig'
@@ -157,7 +157,8 @@ function lint_setup()
   end
 
   nvim_lsp.jedi_language_server.setup{
-    cmd = { "/Users/danielroseman/.pyenv/virtualenvs/py3nvim/bin/jedi-language-server" },
+    cmd = { vim.g.python3_env .. "/bin/jedi-language-server" },
+
     capabilities = capabilities,
     on_attach = on_attach,
   }

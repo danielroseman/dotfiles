@@ -42,6 +42,7 @@ brew "pcre"
 brew "pwgen"
 brew "python"
 brew "pyenv"
+pyenv-virtualenv
 #brew "qt@5.5", link: true
 #brew "rbenv"
 brew "switchaudio-osx"
