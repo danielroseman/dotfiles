@@ -65,7 +65,7 @@ function lint_setup()
           require("null-ls").builtins.diagnostics.mypy.with({
             extra_args = function(params)
               local anc = find_ancestor(params.bufname, 'mypy.ini')
-              return anc and {"--config-file", nvim_lsp.util.path.join(anc, 'mypy.ini')}
+              return anc and {"--config-file", nvim_lsp.util.path.join(anc, 'mypy.ini'), '--show-absolute-path'}
             end
           }),
           require("null-ls").builtins.diagnostics.flake8.with({
@@ -83,7 +83,7 @@ function lint_setup()
   --                 or null_ls.builtins.diagnostics.rubocop
   --         end),
       },
-      debug = true,
+  --  debug = true,
   })
 
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
