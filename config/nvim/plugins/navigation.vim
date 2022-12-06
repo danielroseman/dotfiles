@@ -12,6 +12,27 @@ nmap <leader>nf :NvimTreeFindFile<CR>
 nmap <leader>nF :NvimTreeFindFileToggle<CR>
 
 lua <<EOF
+
+  -- browse directories with fzf then open in nvim-tree
+  local fzf_dirs = function(opts)
+    local fzf_lua = require'fzf-lua'
+    opts = opts or {}
+    opts.prompt = "Directories> "
+    opts.fn_transform = function(x)
+      return fzf_lua.utils.ansi_codes.magenta(x)
+    end
+    opts.actions = {
+      ['default'] = function(selected)
+        local tree = require('nvim-tree.api').tree
+        tree.open()
+        tree.find_file(selected[1])
+        -- require('nvim-tree.api').api.node.open.edit()
+
+      end
+    }
+    fzf_lua.fzf_exec("fd --type d", opts)
+  end
+
   function navigation_setup()
     require("nvim-tree").setup()
 
@@ -34,6 +55,7 @@ lua <<EOF
     })
     vim.keymap.set('n', '<leader>t', fzf.files, {desc = "fzf.files"})
     vim.keymap.set('n', '<leader>o', fzf.buffers, {desc = "fzf.buffers"})
+    vim.keymap.set('n', '<leader>gd', fzf_dirs, {desc = "fzf.dirs"})
     vim.keymap.set('n', '<leader>gm', fzf.oldfiles, {desc = "fzf.oldfiles"})
     vim.keymap.set('n', '<leader>gh', fzf.command_history, {desc = "fzf.command_history"})
     vim.keymap.set('n', '<leader>gs', fzf.git_status, {desc = "fzf.git_status"})
