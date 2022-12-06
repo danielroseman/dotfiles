@@ -37,7 +37,14 @@ function autocomplete_setup()
       end,
     },
     enabled = function()
-      if require"cmp.config.context".in_treesitter_capture("comment")==true or require"cmp.config.context".in_syntax_group("Comment") then
+      if vim.api.nvim_get_mode().mode == 'c' then
+        return true
+      end
+      if vim.api.nvim_buf_get_option(0, 'filetype') == 'gitcommit' then
+        return false
+      end
+      local context = require("cmp.config.context")
+      if context.in_treesitter_capture("comment")==true or context.in_syntax_group("Comment") then
         return false
       else
         return true
