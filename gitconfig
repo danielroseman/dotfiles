@@ -33,7 +33,7 @@
 [alias]
 	cleanup = "!git branch --merged | grep -v '\\*\\|master\\|develop\\|main' | xargs -n 1 git branch -d"
 	can = commit --amend --no-edit
-	fp = push --force-with-lease origin head
+	fp = push --force-with-lease origin HEAD
 	ds = diff --staged
 [gpg]
 	program = /opt/dev/bin/gpg-auto-pin
