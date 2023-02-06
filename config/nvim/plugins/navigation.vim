@@ -23,27 +23,40 @@ lua <<EOF
     end
     opts.actions = {
       ['default'] = function(selected)
-        local tree = require('nvim-tree.api').tree
-        tree.open()
-        tree.find_file(selected[1])
-        -- require('nvim-tree.api').api.node.open.edit()
-
+        local api = require('nvim-tree.api')
+        api.tree.open()
+        api.tree.find_file(selected[1])
+        api.node.open.edit()
       end
     }
     fzf_lua.fzf_exec("fd --type d", opts)
   end
 
   function navigation_setup()
-    require("nvim-tree").setup()
+    require("nvim-tree").setup({
+      view = {
+        adaptive_size = true,
+        float = { enable = true }
+      }
+    })
 
     fzf = require('fzf-lua')
     fzf.setup({
       fzf_opts = {
         ['--layout'] = 'default',
       },
-      previewers = {
-        git_diff = {
-          pager = "delta --width=$FZF_PREVIEW_COLUMNS",
+      git = {
+        bcommits = {
+          actions = {
+            ["ctrl-y"] = function(selected, opts)
+              local sha = selected[1]:match('%S+')
+              vim.cmd('e ' .. vim.fn.FugitiveFind(sha))
+            end
+          },
+          preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
+        },
+        status = {
+          preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
         }
       },
       lsp = {
