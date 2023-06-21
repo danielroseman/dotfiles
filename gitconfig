@@ -1,6 +1,6 @@
 [core]
-	excludesfile = /Users/danielroseman/.gitignore_global
-	attributesfile = /Users/danielroseman/.gitattributes
+	excludesfile = ~/.gitignore_global
+	attributesfile = ~/.gitattributes
 [diff]
 	noprefix = true
 [user]
@@ -35,7 +35,9 @@
 	can = commit --amend --no-edit
 	fp = push --force-with-lease origin HEAD
 	ds = diff --staged
+  rsw = restore --staged --worktree
+  sno = show --name-only
 [gpg]
 	program = /opt/dev/bin/gpg-auto-pin
 [include]
-	path = /Users/danielroseman/.config/dev/gitconfig
+	path = ~/.config/dev/gitconfig

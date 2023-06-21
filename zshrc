@@ -48,10 +48,13 @@ if [ "$SPIN" ]; then
   alias ls='ls --color'
   alias bat="batcat"
   PROMPT='%m:%~ %# '
+  source /usr/share/doc/fzf/examples/completion.zsh
+  source /usr/share/doc/fzf/examples/key-bindings.zsh 
 fi
 
 # Spring is more trouble than it's worth
 export DISABLE_SPRING=1
+export IRB_USE_AUTOCOMPLETE=false
 
 export BAT_THEME="gruvbox-dark"
 
@@ -73,7 +76,7 @@ export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 # toggle bluetooth
 alias bt='blueutil -p $((1-$(blueutil -p)))'
 
-alias sftp='with-readline sftp'
+# alias sftp='with-readline sftp'
 
 # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -81,8 +84,8 @@ alias sftp='with-readline sftp'
 export PATH="$HOME/.poetry/bin:$PATH"
 
 [ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
-if [ -e /Users/danielroseman/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/danielroseman/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
-[[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }
+[[ -f /opt/dev/sh/chruby/chruby.sh ]] && { type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; } }
 
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
