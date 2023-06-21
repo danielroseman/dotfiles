@@ -129,31 +129,9 @@ function lint_setup()
     setkey('<space>rn', vim.lsp.buf.rename, "lsp.rename")
     setkey('<space>ca', vim.lsp.buf.code_action, "lsp.code_action")
     setkey('gr', vim.lsp.buf.references, "lsp.references")
-    setkey('<space>f', vim.lsp.buf.formatting, "lsp.formatting")
-  end
-
-  if not configs.ruby_lsp then
-   configs.ruby_lsp = {
-     default_config = {
-       cmd = {'bundle', 'exec', 'ruby-lsp'};
-       filetypes = {'ruby'};
-       -- root_dir = function(fname)
-         -- local root = find_ancestor(fname, 'Gemfile')
-       -- end;
-       root_dir = nvim_lsp.util.root_pattern('Gemfile');
-       -- on_new_config = function(new_config, root_dir)
-         -- local in_gemfile = os.execute("grep ruby-lsp " .. root_dir .. "/Gemfile")
-         -- if in_gemfile then
-           -- new_config.cmd = {'bundle', 'exec', 'ruby-lsp'}
-         -- else
-           -- new_config.autostart = false
-         -- end
-       -- end;
-       settings = {};
-       on_attach = on_attach;
-       capabilities = capabilities
-     };
-   }
+    setkey('<space>f', function() 
+      vim.lsp.buf.format { async = true }
+    end, "lsp.formatting")
   end
 
   nvim_lsp.jedi_language_server.setup{
@@ -162,7 +140,7 @@ function lint_setup()
     capabilities = capabilities,
     on_attach = on_attach,
   }
-  nvim_lsp.ruby_lsp.setup{
+  nvim_lsp.ruby_ls.setup{
     capabilities = capabilities,
     on_attach = on_attach,
   }
