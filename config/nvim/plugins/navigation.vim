@@ -84,6 +84,7 @@ lua <<EOF
     vim.keymap.set('n', '<leader>dw', fzf.diagnostics_workspace, {desc = "fzf.diagnostics_workspace"})
     vim.keymap.set('n', '<leader>gr', fzf.lsp_references, {desc = "fzf.lsp_references"})
     vim.keymap.set('n', '<leader>r', fzf.resume, {desc = "fzf.resume"})
+    vim.keymap.set('n', '<leader>jj', fzf.jumps, {desc = "fzf.jumps"})
   end
 EOF
 
