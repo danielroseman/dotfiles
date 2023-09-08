@@ -6,6 +6,7 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'dcampos/nvim-snippy'
 Plug 'dcampos/cmp-snippy'
+Plug 'github/copilot.vim'
 Plug 'nvim-lua/plenary.nvim'
 
 lua <<EOF
@@ -93,6 +94,9 @@ function autocomplete_setup()
           fallback()
         end
       end, { "i", "s" }),
+      ['<C-J>'] = cmp.mapping(function(fallback)
+        vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
+      end)
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
@@ -121,6 +125,20 @@ function autocomplete_setup()
       { name = 'cmdline' }
     })
   })
+
+  -- Copilot setup: disable mapping as it is managed through cmp
+  -- vim.keymap.set('i', '<C-[>', 'copilot#Accept("<CR>")', { silent = true, expr = true, noremap = true })
+  -- disable copilot keymapping
+  -- vim.g.copilot_no_mappings = true
+  vim.g.copilot_no_tab_map = true
+  vim.g.copilot_assume_mapped = true
+  --   vim.keymap.set(
+  --    "i",
+  --    "<Plug>(vimrc:copilot-dummy-map)",
+  --    'copilot#Accept("")',
+  --    { silent = true, expr = true, desc = "Copilot dummy accept" }
+  -- )
+
 end
 
 EOF
