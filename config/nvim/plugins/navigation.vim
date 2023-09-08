@@ -91,6 +91,9 @@ lua <<EOF
           fzf_opts = { ["--nth"] = "2" }, -- don't match on symbol type
           regex_filter = "^%[[FCM][^o].*" -- only show Functions, Classes and Methods (and not Modules)
         }
+      },
+      buffers = {
+        fzf_opts = {  ["--delimiter"] = "' '", ["--with-nth"] = "-1.." }, -- hide buffer number
       }
     })
     vim.keymap.set('n', '<leader>t', fzf.files, {desc = "fzf.files"})
@@ -101,6 +104,7 @@ lua <<EOF
     vim.keymap.set('n', '<leader>gs', fzf.git_status, {desc = "fzf.git_status"})
     vim.keymap.set('n', '<leader>gc', fzf.git_bcommits, {desc = "fzf.git_bcommits"})
     vim.keymap.set('n', '<leader>gb', fzf.git_branches, {desc = "fzf.git_branches"})
+    vim.keymap.set('n', '<leader>gl', fzf.git_commits, {desc = "fzf.git_commits"})
     vim.keymap.set('n', '<leader>st', fzf.git_stash, {desc = "fzf.git_stash"})
     vim.keymap.set('n', '<leader>gt', fzf.btags, {desc = "fzf.btags"})
     vim.keymap.set('n', '<leader>gg', fzf.grep_cword, {desc = "fzf.grep_cword"})
@@ -112,6 +116,7 @@ lua <<EOF
     vim.keymap.set('n', '<leader>gr', fzf.lsp_references, {desc = "fzf.lsp_references"})
     vim.keymap.set('n', '<leader>r', fzf.resume, {desc = "fzf.resume"})
     vim.keymap.set('n', '<leader>jj', fzf.jumps, {desc = "fzf.jumps"})
+    vim.keymap.set('n', '<leader>kk', fzf.keymaps, {desc = "fzf.keymaps"})
   end
 EOF
 
