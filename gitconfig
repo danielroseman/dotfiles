@@ -32,6 +32,7 @@
     diffFilter = delta --color-only
 [alias]
 	cleanup = "!git branch --merged | grep -v '\\*\\|master\\|develop\\|main' | xargs -n 1 git branch -d"
+	gu = "!git checkout $(git symbolic-ref --short refs/remotes/origin/HEAD| sed \"s@^origin/@@\") && git pull"
 	can = commit --amend --no-edit
 	fp = push --force-with-lease origin HEAD
 	ds = diff --staged
