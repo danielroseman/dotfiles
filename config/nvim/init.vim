@@ -4,12 +4,8 @@ let g:python3_host_prog = g:python3_env . '/bin/python'
 "
 " Configure vim-plug
 call plug#begin()
-" Look and feel
-Plug 'gruvbox-community/gruvbox'
-Plug 'itchyny/lightline.vim'
-Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
 
+source ~/.config/nvim/plugins/look_and_feel.vim
 source ~/.config/nvim/plugins/navigation.vim
 source ~/.config/nvim/plugins/autocomplete.vim
 source ~/.config/nvim/plugins/lint.vim
@@ -28,7 +24,6 @@ Plug 'tpope/vim-rails'
 Plug 'honza/vim-snippets'           " some default snippets
 call plug#end()
 
-doautocmd User PlugLoaded
 
 set backspace=indent,eol,start
 set number
@@ -50,58 +45,13 @@ set nojoinspaces
 set tildeop  " make ~ into a command (so you can do eg ~aw)
 set hlsearch
 set noincsearch
-set list
-set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:»,precedes:«
-" always show gutter
-set signcolumn=yes
-set showbreak=↪  " show a line has been wrapped
-set noshowmode   " lightline shows this already
 runtime macros/matchit.vim
 set autoread
-set cc=80
 set mouse=a
 
 set completeopt=menu,menuone,noselect
 
-set background=dark
-set termguicolors
-let g:gruvbox_contrast_dark="hard"
-let g:gruvbox_invert_selection=0
-colorscheme gruvbox
-highlight! link FloatBorder Normal
-highlight! link NormalFloat Normal
-
-let g:lightline = {
-      \ 'colorscheme': 'gruvbox' ,
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'relativepath', 'modified' ] ],
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'gitbranch' ] ]
-      \ },
-      \ 'inactive': {
-      \   'left': [ [ 'filename', 'modified' ] ],
-      \   'right': [ [ 'lineinfo' ], ['percent'] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \ },
-      \ 'mode_map': {
-        \ 'n' : 'N',
-        \ 'i' : 'I',
-        \ 'R' : 'R',
-        \ 'v' : 'V',
-        \ 'V' : 'VL',
-        \ "\<C-v>": 'VB',
-        \ 'c' : 'C',
-        \ 's' : 'S',
-        \ 'S' : 'SL',
-        \ "\<C-s>": 'SB',
-        \ 't': 'T',
-        \ },
-      \ }
-
+doautocmd User PlugLoaded
 " mapping to remove highlight after search
 nnoremap <silent> <leader><space> :noh<cr>
 " reselect last pasted text, preserving visual mode that was used originally
@@ -161,12 +111,6 @@ let g:vim_json_conceal = 0
 let g:NERDSpaceDelims = 1
 " Join commented lines
 set formatoptions+=j
-
-" let g:indentLine_char = "│"
-" let g:indentLine_color_term = 238
-let g:indent_blankline_use_treesitter = v:true
-let g:indent_blankline_show_current_context = v:true
-let g:indent_blankline_use_treesitter_scope = v:true
 
 " convert from foo.bar to foo['bar']
 nmap <leader>p ysaw'ysa']hx
