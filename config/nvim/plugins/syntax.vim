@@ -6,7 +6,6 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'RRethy/nvim-treesitter-textsubjects'
 Plug 'RRethy/nvim-treesitter-endwise'
-Plug 'p00f/nvim-ts-rainbow'
 Plug 'omnisyle/nvim-hidesig'
 
 lua <<EOF
@@ -22,7 +21,6 @@ function syntax_setup()
     endwise = {
       enable = true,
     },
-    rainbow = { enable = true, extended_mode = false },
     hidesig = {
       enable = true,
       opacity = 0.5,
