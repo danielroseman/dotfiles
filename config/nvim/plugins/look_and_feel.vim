@@ -7,10 +7,8 @@ Plug 'kyazdani42/nvim-web-devicons'
 lua <<EOF
 function look_and_feel_setup()
 
-  require("indent_blankline").setup {
-    show_current_context = true,
-    use_treesitter = true,
-    use_treesitter_scope = true,
+  require("ibl").setup {
+    scope = { enabled = false } ,
   }
 
   vim.opt.list = true
