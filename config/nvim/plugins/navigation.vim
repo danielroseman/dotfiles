@@ -69,9 +69,6 @@ lua <<EOF
 
     fzf = require('fzf-lua')
     fzf.setup({
-      fzf_opts = {
-        ['--layout'] = 'default',
-      },
       git = {
         bcommits = {
           actions = {
@@ -82,14 +79,19 @@ lua <<EOF
           },
           preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
         },
+        branches = {
+          cmd = "git branch --all --color --sort=-authordate"
+        },
         status = {
           preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
         }
       },
       lsp = {
         symbols = {
-          fzf_opts = { ["--nth"] = "2" }, -- don't match on symbol type
-          regex_filter = "^%[[FCM][^o].*" -- only show Functions, Classes and Methods (and not Modules)
+          fzf_opts = {
+            ["--nth"] = "1", -- don't match on symbol type
+          },
+          -- regex_filter = "^%[[FCM][^o].*" -- only show Functions, Classes and Methods (and not Modules)
         }
       },
       buffers = {
@@ -110,6 +112,7 @@ lua <<EOF
     vim.keymap.set('n', '<leader>gg', fzf.grep_cword, {desc = "fzf.grep_cword"})
     vim.keymap.set('n', '<leader>rg', fzf.grep, {desc = "fzf.grep"})
     vim.keymap.set('n', '<leader>ds', fzf.lsp_document_symbols, {desc = "fzf.lsp_document_symbols"})
+    vim.keymap.set('n', '<leader>ws', fzf.lsp_workspace_symbols, {desc = "fzf.lsp_workspace_symbols"})
     vim.keymap.set('n', '<leader>dd', fzf.diagnostics_document, {desc = "fzf.diagnostics_document"})
     vim.keymap.set('n', '<leader>dw', fzf.diagnostics_workspace, {desc = "fzf.diagnostics_workspace"})
     vim.keymap.set('n', '<leader>dw', fzf.diagnostics_workspace, {desc = "fzf.diagnostics_workspace"})
