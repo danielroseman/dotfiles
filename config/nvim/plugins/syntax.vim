@@ -7,6 +7,7 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'RRethy/nvim-treesitter-textsubjects'
 Plug 'RRethy/nvim-treesitter-endwise'
 Plug 'omnisyle/nvim-hidesig'
+Plug 'HiPhish/rainbow-delimiters.nvim'
 
 lua <<EOF
 function syntax_setup()

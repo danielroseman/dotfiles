@@ -4,7 +4,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'folke/lsp-colors.nvim'
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'nvimtools/none-ls.nvim'
 
 lua <<EOF
 function lint_setup()
@@ -43,7 +43,8 @@ function lint_setup()
     "", "<leader>dl", lsp_lines.toggle, { desc = "Toggle lsp_lines" }
   )
   vim.diagnostic.config({
-    virtual_text = false,
+    virtual_text = false, -- built-in virtual text displays at end of line
+    virtual_lines = { only_current_line = true },
     signs = true,
     update_in_insert = false,
     underline = true,
@@ -62,17 +63,12 @@ function lint_setup()
 
   null_ls.setup({
       sources = {
-          require("null-ls").builtins.diagnostics.mypy.with({
+          null_ls.builtins.diagnostics.mypy.with({
             extra_args = function(params)
               local anc = find_ancestor(params.bufname, 'mypy.ini')
               return anc and {"--config-file", nvim_lsp.util.path.join(anc, 'mypy.ini'), '--show-absolute-path'}
             end
           }),
-          require("null-ls").builtins.diagnostics.flake8.with({
-            cwd = function(params)
-              return find_ancestor(params.bufname, 'requirements.txt')
-            end
-          })
   --         -- require("null-ls").builtins.diagnostics.rubocop,
   --         conditional(function(utils)
   --             return utils.root_has_file("Gemfile")
@@ -139,6 +135,16 @@ function lint_setup()
 
     capabilities = capabilities,
     on_attach = on_attach,
+  }
+  nvim_lsp.ruff_lsp.setup {
+    cmd = { vim.g.python3_env .. "/bin/ruff-lsp" },
+    on_attach = on_attach,
+    init_options = {
+      settings = {
+        -- Any extra CLI arguments for `ruff` go here.
+        args = {},
+      }
+    }
   }
   nvim_lsp.ruby_ls.setup{
     capabilities = capabilities,
