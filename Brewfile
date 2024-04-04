@@ -1,6 +1,7 @@
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 tap "homebrew/services"
+brew "atuin"
 brew "bat"
 brew "blueutil"
 brew "brew-pip"

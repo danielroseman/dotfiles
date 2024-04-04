@@ -1,5 +1,5 @@
 setopt CORRECT
-setopt CORRECT_ALL
+unsetopt CORRECT_ALL
 setopt AUTO_CD
 export CLICOLOR=1
 export EDITOR=nvim
@@ -89,3 +89,5 @@ if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile
 [[ -f /opt/dev/sh/chruby/chruby.sh ]] && { type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; } }
 
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
+
+eval "$(atuin init zsh)"
