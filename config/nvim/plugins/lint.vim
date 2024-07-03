@@ -65,8 +65,11 @@ function lint_setup()
       sources = {
           null_ls.builtins.diagnostics.mypy.with({
             extra_args = function(params)
-              local anc = find_ancestor(params.bufname, 'mypy.ini')
-              return anc and {"--config-file", nvim_lsp.util.path.join(anc, 'mypy.ini'), '--show-absolute-path'}
+              if find_ancestor(params.bufname, 'mypy.ini') then
+                return {"--config-file", nvim_lsp.util.path.join(anc, 'mypy.ini'), '--show-absolute-path'}
+              elseif find_ancestor(params.bufname, 'pyproject.toml') then
+                return {"--config-file", nvim_lsp.util.path.join(anc, 'pyproject.toml'), '--show-absolute-path'}
+              end
             end
           }),
   --         -- require("null-ls").builtins.diagnostics.rubocop,
@@ -92,6 +95,20 @@ function lint_setup()
       border = "rounded"
     }
   )
+
+  -- open definition in other window if not the same buffer
+  local util = require('vim.lsp.util')
+  util.jump_to_location = function(location, offset_encoding, reuse_win)
+    if offset_encoding == nil then
+      vim.notify_once(
+        'jump_to_location must be called with valid offset encoding',
+        vim.log.levels.WARN
+      )
+    end
+    vim.api.nvim_command("wincmd w")
+    return util.show_document(location, offset_encoding, { reuse_win = true, focus = true })
+  end
+
   require('lspconfig.ui.windows').default_options.border = 'single'
 
   local setkey = function(key, func, desc)
@@ -136,8 +153,8 @@ function lint_setup()
     capabilities = capabilities,
     on_attach = on_attach,
   }
-  nvim_lsp.ruff_lsp.setup {
-    cmd = { vim.g.python3_env .. "/bin/ruff-lsp" },
+  nvim_lsp.ruff.setup {
+    cmd = { vim.g.python3_env .. "/bin/ruff", "server", "--preview"},
     on_attach = on_attach,
     init_options = {
       settings = {
@@ -146,7 +163,7 @@ function lint_setup()
       }
     }
   }
-  nvim_lsp.ruby_ls.setup{
+  nvim_lsp.ruby_lsp.setup{
     capabilities = capabilities,
     on_attach = on_attach,
   }
