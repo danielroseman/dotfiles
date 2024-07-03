@@ -90,4 +90,6 @@ if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile
 
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
 
-eval "$(atuin init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
+# export ATUIN_HISTORY_SEARCH_FILTER_MODE=global
+source ~/.config/atuin/atuin-history-arrow.zsh
