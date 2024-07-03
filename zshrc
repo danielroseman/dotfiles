@@ -81,7 +81,7 @@ alias bt='blueutil -p $((1-$(blueutil -p)))'
 # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
-export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$HOME/.poetry/bin:$HOME/.local/bin:$PATH"
 
 [ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
 if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

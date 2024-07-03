@@ -1,0 +1,4 @@
+pynvim
+jedi-language-server
+ruff
+

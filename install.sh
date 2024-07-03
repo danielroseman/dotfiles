@@ -6,10 +6,19 @@ TARGET=$HOME
 for f in $FILES; do
 	ln -sf $SOURCE/$f $TARGET/.$f;
 done
+CONFIGS="nvim atuin"
 ln -sf $SOURCE/config/nvim ~/.config/nvim
+for f in $CONFIGS; do
+	ln -sf $SOURCE/config/$f $TARGET/.config/.$f;
+done
 
+ln -s $(which fdfind) ~/.local/bin/fd
+ln -s $(which batcat) ~/.local/bin/bat
+ln -s $HOME/.pyenv/bin/pyenv ~/.local/bin/pyenv
+
+echo "creating nvim virtualenv"
 pyenv virtualenv py3nvim
-$(pyenv prefix py3nvim)/bin/pip install pynvim jedi-language-server
+$(pyenv prefix py3nvim)/bin/pip install -r config/nvim/requirements.txt
 
 echo "installing vim-plug"
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
@@ -18,3 +27,6 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 echo "installing nvim plugins"
 nvim -es -i NONE -u config/nvim/init.vim -c "PlugInstall" -c "qa"
 echo "done"
+
+echo "installing git-delta"
+nix-env -iA nixpkgs.delta
