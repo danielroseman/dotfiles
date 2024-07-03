@@ -6,13 +6,14 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'wesQ3/vim-windowswap'         " <leader>ww to yank and paste window
 Plug 'milkypostman/vim-togglelist'  " <leader>l to toggle locationlist
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim'
 
-nmap <silent> <C-n> :NvimTreeToggle<CR>
-nmap <leader>nf :NvimTreeFindFile<CR>
-nmap <leader>nF :NvimTreeFindFileToggle<CR>
+nmap <silent> <C-n> :Neotree float<CR>
+nmap <leader>nf :Neotree float reveal<CR>
+" nmap <leader>nF :NvimTreeFindFileToggle<CR>
 
 lua <<EOF
-
   -- browse directories with fzf then open in nvim-tree
   local fzf_dirs = function(opts)
     local fzf_lua = require'fzf-lua'
@@ -80,7 +81,7 @@ lua <<EOF
           preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
         },
         branches = {
-          cmd = "git branch --all --color --sort=-authordate"
+          cmd = "git branch --color --sort=-authordate"
         },
         status = {
           preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
@@ -95,7 +96,7 @@ lua <<EOF
         }
       },
       buffers = {
-        fzf_opts = {  ["--delimiter"] = "' '", ["--with-nth"] = "-1.." }, -- hide buffer number
+        fzf_opts = {  ["--delimiter"] = " ", ["--with-nth"] = "-1.." }, -- hide buffer number
       }
     })
     vim.keymap.set('n', '<leader>t', fzf.files, {desc = "fzf.files"})
