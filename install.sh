@@ -12,9 +12,14 @@ for f in $CONFIGS; do
 	ln -sf $SOURCE/config/$f $TARGET/.config/.$f;
 done
 
+echo "installing extra packages"
+nix-env -iA nixpkgs.delta
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+
 ln -s $(which fdfind) ~/.local/bin/fd
 ln -s $(which batcat) ~/.local/bin/bat
 ln -s $HOME/.pyenv/bin/pyenv ~/.local/bin/pyenv
+ln -s $HOME/.atuin/bin/atuin ~/.local/bin/atuin
 
 echo "creating nvim virtualenv"
 pyenv virtualenv py3nvim
@@ -28,5 +33,3 @@ echo "installing nvim plugins"
 nvim -es -i NONE -u config/nvim/init.vim -c "PlugInstall" -c "qa"
 echo "done"
 
-echo "installing git-delta"
-nix-env -iA nixpkgs.delta
