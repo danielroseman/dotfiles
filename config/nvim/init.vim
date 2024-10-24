@@ -104,6 +104,8 @@ cnoremap <C-g>  <C-c>
 let g:splitjoin_ruby_curly_braces = 0
 let g:splitjoin_trailing_comma = 1
 
+autocmd FileType python set tw=0 sw=2 sts=2
+
 au BufRead,BufNewFile *.md set filetype=markdown textwidth=80 formatoptions=t1
 let g:vim_json_conceal = 0
 "
