@@ -4,7 +4,6 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'folke/lsp-colors.nvim'
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvimtools/none-ls.nvim'
 
 lua <<EOF
 function lint_setup()
@@ -57,32 +56,6 @@ function lint_setup()
       header = '',
       prefix = '',
     },
-  })
-
-  local null_ls = require("null-ls")
-
-  null_ls.setup({
-      sources = {
-          null_ls.builtins.diagnostics.mypy.with({
-            extra_args = function(params)
-              if find_ancestor(params.bufname, 'mypy.ini') then
-                return {"--config-file", nvim_lsp.util.path.join(anc, 'mypy.ini'), '--show-absolute-path'}
-              elseif find_ancestor(params.bufname, 'pyproject.toml') then
-                return {"--config-file", nvim_lsp.util.path.join(anc, 'pyproject.toml'), '--show-absolute-path'}
-              end
-            end
-          }),
-  --         -- require("null-ls").builtins.diagnostics.rubocop,
-  --         conditional(function(utils)
-  --             return utils.root_has_file("Gemfile")
-  --                     and null_ls.builtins.formatting.rubocop.with({
-  --                         command = "bundle",
-  --                         args = vim.list_extend({ "exec", "rubocop" }, null_ls.builtins.diagnostics.rubocop._opts.args),
-  --                     })
-  --                 or null_ls.builtins.diagnostics.rubocop
-  --         end),
-      },
-  --  debug = true,
   })
 
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
@@ -147,11 +120,20 @@ function lint_setup()
     end, "lsp.formatting")
   end
 
-  nvim_lsp.jedi_language_server.setup{
-    cmd = { vim.g.python3_env .. "/bin/jedi-language-server" },
-
+  nvim_lsp.pylsp.setup{
+    cmd = { vim.g.python3_env .. "/bin/pylsp" },
     capabilities = capabilities,
     on_attach = on_attach,
+    settings = {
+      pylsp = {
+        plugins = {
+          pylsp_mypy = { enabled = true },
+          jedi_completion = { fuzzy = true },
+          jedi_definition = { enabled = true, follow_builtin_definitions = false, follow_builtin_imports = false },
+          ruff = { enabled = false },
+        },
+      },
+    },
   }
   nvim_lsp.ruff.setup {
     cmd = { vim.g.python3_env .. "/bin/ruff", "server", "--preview"},

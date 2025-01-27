@@ -1,4 +1,5 @@
 pynvim
-jedi-language-server
+git+https://github.com/danielroseman/python-lsp-server.git
+pylsp-mypy
 ruff
 
