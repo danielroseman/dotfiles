@@ -13,7 +13,6 @@ source ~/.config/nvim/plugins/syntax.vim
 source ~/.config/nvim/plugins/git.vim
 
 " Text navigation/editing/selecting
-Plug 'preservim/nerdcommenter'      " <leader>c<space> to toggle comment
 Plug 'Valloric/MatchTagAlways'      " higlight matching HTML tags
 Plug 'tpope/vim-surround'           " select/change parens etc
 Plug 'tpope/vim-repeat'

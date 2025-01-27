@@ -8,6 +8,8 @@ Plug 'RRethy/nvim-treesitter-textsubjects'
 Plug 'RRethy/nvim-treesitter-endwise'
 Plug 'omnisyle/nvim-hidesig'
 Plug 'HiPhish/rainbow-delimiters.nvim'
+Plug 'Wansmer/treesj'
+Plug 'numToStr/Comment.nvim'
 
 lua <<EOF
 function syntax_setup()
@@ -95,6 +97,10 @@ function syntax_setup()
     },
   }
 
+  local tsj = require('treesj')
+  tsj.setup()
+
+  require('Comment').setup()
 end
 EOF
 
