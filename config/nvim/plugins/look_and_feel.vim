@@ -18,6 +18,8 @@ function look_and_feel_setup()
   vim.opt.showmode = false    -- lightline shows this already
   vim.opt.colorcolumn = "80"
 
+  vim.o.winborder = 'rounded'
+
   vim.opt.background = "dark"
   vim.opt.termguicolors = true
   vim.g.gruvbox_contrast_dark = "hard"

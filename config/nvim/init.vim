@@ -80,10 +80,6 @@ command! Qa :windo qa
 " ctrl-g always shows full path
 nnoremap <C-G> 3<C-G>
 
-" The only things I used from vim-unimpaired; [<space> to open line above
-nmap [<Space> :exe 'put!=nr2char(10)'<CR>
-nmap ]<Space> :exe 'put =nr2char(10)'<CR>
-
 " saveas in current directory
 command! -nargs=* -complete=file Lsaveas saveas %:h/<args>
 
