@@ -6,7 +6,7 @@ TARGET=$HOME
 for f in $FILES; do
 	ln -sf $SOURCE/$f $TARGET/.$f;
 done
-CONFIGS="nvim atuin"
+CONFIGS="nvim atuin wezterm"
 ln -sf $SOURCE/config/nvim ~/.config/nvim
 for f in $CONFIGS; do
 	ln -sf $SOURCE/config/$f $TARGET/.config/.$f;
