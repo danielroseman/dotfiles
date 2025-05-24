@@ -25,6 +25,9 @@ function look_and_feel_setup()
   vim.g.gruvbox_contrast_dark = "hard"
   vim.g.gruvbox_invert_selection = 0
   vim.cmd "colorscheme gruvbox"
+  -- fix inverted statusline in nvim 0.11+
+  vim.cmd "hi StatusLine cterm=NONE gui=NONE"
+  vim.cmd "hi StatusLineNC cterm=NONE gui=NONE"
   vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
   vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
 
