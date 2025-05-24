@@ -10,6 +10,7 @@ Plug 'omnisyle/nvim-hidesig'
 Plug 'HiPhish/rainbow-delimiters.nvim'
 Plug 'Wansmer/treesj'
 Plug 'numToStr/Comment.nvim'
+Plug 'kylechui/nvim-surround'
 
 lua <<EOF
 function syntax_setup()
@@ -101,6 +102,7 @@ function syntax_setup()
   tsj.setup()
 
   require('Comment').setup()
+  require("nvim-surround").setup({})
 end
 EOF
 
